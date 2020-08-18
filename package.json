@@ -21,7 +21,6 @@
     "vue",
     "markdown",
     "vue-markdown",
-    "vue-markdown-it"
     "vue-markdown-pdq"
   ],
   "author": "Peter MacDonald",
