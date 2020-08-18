@@ -1,4 +1,4 @@
-# vue-markdown-it
+# vue-markdown-pdq
 
 > This package does not support `vue1.X.X`.
 
@@ -6,7 +6,7 @@ A powerful and highspeed Markdown component for Vue.
 
 An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have dormant. 
 
-Quick start: `<vue-markdown-it>i am a ~~tast~~ **test**.</vue-markdown-it>`
+Quick start: `<vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>`
 
 Supported Markdown Syntax:
 
@@ -34,7 +34,7 @@ Supported Markdown Syntax:
 
 # Example
 
-[Live Demo](https://jsish.org/vue-markdown-it/demo)
+[Live Demo](https://jsish.org/vue-markdown-pdq/demo)
 
 # Installation
 
@@ -44,10 +44,10 @@ Supported Markdown Syntax:
 
 ```html
 <body>
-  <vue-markdown-it>i am a ~~tast~~ **test**.</vue-markdown-it>
+  <vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>
 </body>
 <script src="path/to/vue.js"></script>
-<script src="path/to/vue-markdown-it.js"></script>
+<script src="path/to/vue-markdown-pdq.js"></script>
 <script>
     Vue.use(VueMarkdownIt);
     var vm = new Vue({
@@ -59,10 +59,10 @@ Supported Markdown Syntax:
 # Slots
 
 ```html
-<vue-markdown-it>this is the default slot</vue-markdown-it>
+<vue-markdown-pdq>this is the default slot</vue-markdown-pdq>
 ```
 
-After setting up the middleware in your vue component above, using the embedded markdown is as easy as writing it between the `vue-markdown-it` tags.
+After setting up the middleware in your vue component above, using the embedded markdown is as easy as writing it between the `vue-markdown-pdq` tags.
 
 VueMarkdown has a default slot which is used to write the `markdown` source.
 
@@ -134,4 +134,4 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 # License
 
-Copyright (c) 2020 [pmacdona](https://jsish.org/vue-markdown-it) by [MIT](https://opensource.org/licenses/MIT)
+Copyright (c) 2020 [pmacdona](https://jsish.org/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
