@@ -1,0 +1,56 @@
+{
+  "name": "vue-markdown-pdq",
+  "version": "2.0.16",
+  "description": "A Powerful and Highspeed Markdown Parser for Vue",
+  "main": "dist/vue-markdown-pdq.common.js",
+  "files": [
+    "dist/vue-markdown-pdq.js",
+    "dist/vue-markdown-pdq.common.js",
+    "src"
+  ],
+  "scripts": {
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.common.js",
+    "publish": "sh ./publish.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdqi/vue-markdown-pdq.git"
+  },
+  "keywords": [
+    "vue",
+    "markdown",
+    "vue-markdown",
+    "vue-markdown-it"
+    "vue-markdown-pdq"
+  ],
+  "author": "Peter MacDonald",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-transform-runtime": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.11.2",
+    "highlight.js": "^10.1.2",
+    "markdown-it": "^11.0.0",
+    "markdown-it-abbr": "^1.0.4",
+    "markdown-it-alerts": "^0.1.0",
+    "markdown-it-attrs": "^3.0.3",
+    "markdown-it-bracketed-spans": "^1.0.1",
+    "markdown-it-deflist": "^2.0.3",
+    "markdown-it-emoji": "^1.4.0",
+    "markdown-it-footnote": "^3.0.2",
+    "markdown-it-ins": "^3.0.0",
+    "markdown-it-katexx": "^3.1.7",
+    "markdown-it-mark": "^3.0.0",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-toc-and-anchor": "^4.2.0",
+    "markdown-it-collapsible": "^1.0.0"
+  }
+}
