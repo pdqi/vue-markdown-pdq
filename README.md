@@ -34,7 +34,7 @@ Supported Markdown Syntax:
 
 # Example
 
-[Live Demo](https://jsish.org/vue-markdown-pdq/demo)
+[Live Demo](./example/simple/index.html)
 
 # Installation
 
