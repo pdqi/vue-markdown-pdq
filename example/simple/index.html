@@ -4,7 +4,7 @@
 <head>
   <title>simple</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
-  <script src="../../dist/vue-markdown-plus.js"></script>
+  <script src="../../dist/vue-markdown-pdq.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
@@ -17,10 +17,10 @@
 
 <body>
   <div id="app">
-    <vue-markdown-plus>The time of **NOW** is :</vue-markdown-plus>
-    <vue-markdown-plus :source="source"></vue-markdown-plus>
-    <vue-markdown-plus :anchor-attributes="anchorAttrs">[A link to a website](https://google.com)</vue-markdown-plus>
-    <vue-markdown-plus>
+    <vue-markdown-pdq>The time of **NOW** is :</vue-markdown-pdq>
+    <vue-markdown-pdq :source="source"></vue-markdown-pdq>
+    <vue-markdown-pdq :anchor-attributes="anchorAttrs">[A link to a website](https://google.com)</vue-markdown-pdq>
+    <vue-markdown-pdq>
 SyntaxHighlighter by highlight.js:
 
 ``` js
@@ -38,12 +38,12 @@ function $initHighlight(block, cls) {
   }
 }
 ```
-    </vue-markdown-plus>
-    <vue-markdown-plus>**Custom Style**: Adds *style*{.red} using custom classes and ids</vue-markdown-plus>
-    <vue-markdown-plus>**Inline Math**: $\sqrt{3x-1}+(1+x)^2$</vue-markdown-plus>
-    <vue-markdown-plus></vue-markdown-plus>
-    <vue-markdown-plus>**Block Math**</vue-markdown-plus>
-    <vue-markdown-plus>$$\begin{array}{c}
+    </vue-markdown-pdq>
+    <vue-markdown-pdq>**Custom Style**: Adds *style*{.red} using custom classes and ids</vue-markdown-pdq>
+    <vue-markdown-pdq>**Inline Math**: $\sqrt{3x-1}+(1+x)^2$</vue-markdown-pdq>
+    <vue-markdown-pdq></vue-markdown-pdq>
+    <vue-markdown-pdq>**Block Math**</vue-markdown-pdq>
+    <vue-markdown-pdq>$$\begin{array}{c}
 
       \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
       = \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
@@ -53,8 +53,8 @@ function $initHighlight(block, cls) {
       \nabla \cdot \vec{\mathbf{B}} & = 0
 
       \end{array}$$
-    </vue-markdown-plus>
-    <vue-markdown-plus>
+    </vue-markdown-pdq>
+    <vue-markdown-pdq>
 ### Solar System Exploration, 1950s – 1960s
 
 - [ ] Mercury
@@ -66,12 +66,12 @@ function $initHighlight(block, cls) {
 - [ ] Uranus
 - [ ] Neptune
 - [ ] Comet Haley
-    </vue-markdown-plus>
+    </vue-markdown-pdq>
 
-    console.log(VueMarkdownPlus);
+    console.log(VueMarkdownPdq);
   </div>
   <script>
-    Vue.use(VueMarkdownPlus);
+    Vue.use(VueMarkdownPdq);
     new Vue({
       el: '#app',
       data() {
