@@ -71,7 +71,7 @@ export default {
     },
     katex: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     attrs: {
       type: Boolean,

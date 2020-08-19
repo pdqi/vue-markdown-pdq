@@ -32186,7 +32186,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
     },
     katex: {
       type: Boolean,
-      default: false
+      default: true
     },
     attrs: {
       type: Boolean,
