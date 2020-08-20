@@ -30,7 +30,7 @@ Supported Markdown Syntax:
 
 `*SyntaxHighlighter` work with [Prism](https://prismjs.com)
 
-`*katex` is disabled by default, and needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
+`*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
 
 # Example
 
@@ -80,7 +80,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | breaks | Boolean | `true` | `\n` => `<br>` |
 | linkify | Boolean | `true` | autoconvert URL-like text to link |
 | emoji | Boolean | `true` | `:)` => `😃` |
-| katex | Boolean | `false` | latex math support |
+| katex | Boolean | `true` | latex math support |
 | attrs | Boolean | `true` | enable attrs/spans support |
 | attrOpts | Object | `{allowedAttributes: ['id', 'class', 'name', /^data-.*$/]}` | options for attrs |
 | typographer | Boolean | `true` | enable some language-neutral replacement and quotes beautification |
