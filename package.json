@@ -40,6 +40,8 @@
     "markdown-it-alerts": "^0.1.0",
     "markdown-it-attrs": "^3.0.3",
     "markdown-it-bracketed-spans": "^1.0.1",
+    "markdown-it-collapsible": "^1.0.0",
+    "markdown-it-container-pandoc": "^1.0.0",
     "markdown-it-deflist": "^2.0.3",
     "markdown-it-emoji": "^1.4.0",
     "markdown-it-footnote": "^3.0.2",
@@ -49,7 +51,6 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
-    "markdown-it-toc-and-anchor": "^4.2.0",
-    "markdown-it-collapsible": "^1.0.0"
+    "markdown-it-toc-and-anchor": "^4.2.0"
   }
 }

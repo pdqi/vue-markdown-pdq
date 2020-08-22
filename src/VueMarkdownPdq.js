@@ -12,7 +12,7 @@ import toc from 'markdown-it-toc-and-anchor';
 import katex from 'markdown-it-katexx';
 import tasklists from 'markdown-it-task-lists';
 import span from 'markdown-it-bracketed-spans';
-import alerts from 'markdown-it-alerts';
+import pandoc from 'markdown-it-container-pandoc';
 import collapse from 'markdown-it-collapsible';
 
 export default {
@@ -103,7 +103,7 @@ export default {
     },
     taskLists: {
       type: Boolean,
-      default: true
+      default: true,
     },
     toc: {
       type: Boolean,
@@ -158,7 +158,11 @@ export default {
     postrender: {
       type: Function,
       default: (htmlData) => { return htmlData }
-    }
+    },
+    slugify: {
+      type: Function,
+      default: null
+    },
   },
 
   computed: {
@@ -176,7 +180,7 @@ export default {
       .use(abbreviation)
       .use(insert)
       .use(mark)
-      .use(alerts)
+      .use(pandoc)
       .use(tasklists, { enabled: this.taskLists })
 
     if (this.katex) {
@@ -209,6 +213,8 @@ export default {
       }
     this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
       Object.keys(this.anchorAttributes).map((attribute) => {
+        if (!tokens[idx].attrIndex)
+          return;
         let aIndex = tokens[idx].attrIndex(attribute)
         let value = this.anchorAttributes[attribute]
         if (aIndex < 0) {
@@ -231,16 +237,17 @@ export default {
         anchorLinkBefore: this.tocAnchorBefore,
         anchorClassName: this.tocAnchorClass,
         anchorLinkSymbolClassName: this.tocAnchorLinkClass,
+        slugify: this.slugify,
         tocCallback: (tocMarkdown, tocArray, tocHtml) => {
-          if (tocHtml) {
-            if (this.tocId && document.getElementById(this.tocId)) {
-              document.getElementById(this.tocId).innerHTML = tocHtml
-            }
+              if (tocHtml) {
+                if (this.tocId && document.getElementById(this.tocId)) {
+                  document.getElementById(this.tocId).innerHTML = tocHtml
+                }
 
-            this.$emit('toc-rendered', tocHtml)
-          }
-        },
-      })
+                this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray)
+              }
+            }
+       })
     }
 
     let outHtml = this.show ?

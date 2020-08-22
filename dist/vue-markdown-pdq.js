@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 104);
+/******/ 	return __webpack_require__(__webpack_require__.s = 103);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -20697,61 +20697,170 @@ module.exports = function bracketed_spans_plugin(md) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Process block-level custom containers
+//
 
 
-var container = __webpack_require__(103);
+module.exports = function container_plugin(md) {
+  /* eslint max-len: "off" */
+  var NMSTARTCHAR_REGEXP = '[A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD]';
+  var NAMECHAR_REGEXP = '(?:' + NMSTARTCHAR_REGEXP + '|[-0-9.\\u00B7\\u0300-\\u036F\\u203F-\\u2040])';
+  var NAME_FENCE_REGEXP = new RegExp('^:{3,}\\s*(' + NMSTARTCHAR_REGEXP + NAMECHAR_REGEXP + '*)\\s*:*\\s*$');
 
-module.exports = function alerts_plugin(md, options) {
-	var containerOpenCount = 0;
-	var links = options ? options.links : true;
-	init();
-	return;
-	
-	function setupContainer(name) {
-        md.use(container, name, {
-            render: function (tokens, idx) {
-                if (tokens[idx].nesting === 1) {
-                    containerOpenCount += 1;
-                    return '<div class="alert alert-' + name + '" role="alert">\n';
-                } else {
-                    containerOpenCount -= 1;
-                    return '</div>\n';
-                }
-            }
-        });
+  var ATTRIBUTE_PATTERN = '\\.' + NMSTARTCHAR_REGEXP + NAMECHAR_REGEXP + '*|#' + NMSTARTCHAR_REGEXP + NAMECHAR_REGEXP + '*|' + NMSTARTCHAR_REGEXP + NAMECHAR_REGEXP + '*="[^<>\'"]*"';
+  var ATTRIBUTE_FENCE_REGEXP = new RegExp('^:{3,}\\s*\\{\\s*(?:(' + ATTRIBUTE_PATTERN + ')\\s*)+\\}\\s*:*\\s*$');
+
+  function validate(params) {
+    return NAME_FENCE_REGEXP.test(params) || ATTRIBUTE_FENCE_REGEXP.test(params);
+  }
+
+  function render(tokens, idx, _options, env, slf) {
+    if (tokens[idx].nesting === 1) {
+      var tokenInfo = tokens[idx].info;
+      var bareName = NAME_FENCE_REGEXP.exec(tokenInfo);
+      if (bareName !== null) {
+        // bare name: add it as a class
+        tokens[idx].attrJoin('class', bareName[1]);
+      } else {
+        tokenInfo = tokenInfo.replace(/^:{3,}\s*\{\s*/, '');
+        var attrRegexp = new RegExp(ATTRIBUTE_PATTERN, 'g');
+
+        var match;
+        while ((match = attrRegexp.exec(tokenInfo)) !== null) {
+          var attribute = match[0];
+          if (attribute.startsWith('.')) {
+            tokens[idx].attrJoin('class', attribute.substring(1).replace('.', ' '));
+          } else if (attribute.startsWith('#')) {
+            tokens[idx].attrSet('id', attribute.substring(1));
+          } else {
+            var split = attribute.split('=');
+            var attrname = split[0];
+            var value = split.slice(1).join('=').substring(1, split[1].length - 1);
+            tokens[idx].attrPush([ attrname, value ]);
+          }
+        }
+      }
+
+      // add a class to the opening tag
     }
-	
-    function isContainerOpen() {
-        return containerOpenCount > 0;
+
+    return slf.renderToken(tokens, idx, _options, env, slf);
+  }
+
+  var min_markers = 3, marker_char = ':';
+
+  function container(state, startLine, endLine, silent) {
+    var pos, nextLine, marker_count, markup, params, token,
+        old_parent, old_line_max,
+        auto_closed = false,
+        start = state.bMarks[startLine] + state.tShift[startLine],
+        max = state.eMarks[startLine];
+
+    // Check out the first character quickly,
+    // this should filter out most of non-containers
+    //
+    if (marker_char !== state.src[start]) { return false; }
+
+    // Check out the rest of the marker string
+    //
+    for (pos = start + 1; pos <= max; pos++) {
+      if (marker_char !== state.src[pos]) {
+        break;
+      }
     }
-	
-    function selfRender(tokens, idx, options, env, self) {
-        return self.renderToken(tokens, idx, options);
+
+    marker_count = Math.floor(pos - start);
+    if (marker_count < min_markers) { return false; }
+    pos -= pos - start;
+
+    markup = state.src.slice(start, pos);
+    params = state.src.slice(pos, max);
+    if (!validate(params)) { return false; }
+
+    // Since start is found, we can report success here in validation mode
+    //
+    if (silent) { return true; }
+
+    // Search for the end of the block
+    //
+    nextLine = startLine;
+
+    for (;;) {
+      nextLine++;
+      if (nextLine >= endLine) {
+        // unclosed block should be autoclosed by end of document.
+        // also block seems to be autoclosed by end of parent
+        break;
+      }
+
+      start = state.bMarks[nextLine] + state.tShift[nextLine];
+      max = state.eMarks[nextLine];
+
+      if (start < max && state.sCount[nextLine] < state.blkIndent) {
+        // non-empty line with negative indent should stop the list:
+        // - ```
+        //  test
+        break;
+      }
+
+      if (marker_char !== state.src[start]) { continue; }
+
+      if (state.sCount[nextLine] - state.blkIndent >= 4) {
+        // closing fence should be indented less than 4 spaces
+        continue;
+      }
+
+      for (pos = start + 1; pos <= max; pos++) {
+        if (marker_char !== state.src[pos]) {
+          break;
+        }
+      }
+
+      // closing code fence must be at least as long as the opening one
+      if ((pos - start) < marker_count) { continue; }
+
+      // make sure tail has spaces only
+      pos = state.skipSpaces(pos);
+      if (pos < max) { continue; }
+
+      // found!
+      auto_closed = true;
+      break;
     }
-    
-	function setupLinks() {
-		var defaultRender = md.renderer.rules.link_open || selfRender;
-		
-		md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-			if (isContainerOpen()) {
-				tokens[idx].attrPush(['class', 'alert-link']);
-			}
-			
-			return defaultRender(tokens, idx, options, env, self);
-		};
-	}
-	
-	function init() {
-        setupContainer('success');
-        setupContainer('info');
-        setupContainer('warning');
-        setupContainer('danger');
-		
-		if (links) {
-			setupLinks();
-		}
-	}
+
+    old_parent = state.parentType;
+    old_line_max = state.lineMax;
+    state.parentType = 'container';
+
+    // this will prevent lazy continuations from ever going past our end marker
+    state.lineMax = nextLine;
+
+    token        = state.push('container_open', 'div', 1);
+    token.markup = markup;
+    token.block  = true;
+    token.info   = params;
+    token.map    = [ startLine, nextLine ];
+
+    state.md.block.tokenize(state, startLine + 1, nextLine);
+
+    token        = state.push('container_close', 'div', -1);
+    token.markup = state.src.slice(start, pos);
+    token.block  = true;
+
+    state.parentType = old_parent;
+    state.lineMax = old_line_max;
+    state.line = nextLine + (auto_closed ? 1 : 0);
+
+    return true;
+  }
+
+  md.block.ruler.before('fence', 'container', container, {
+    alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]
+  });
+  md.renderer.rules.container_open = render;
+  md.renderer.rules.container_close = render;
 };
+
 
 /***/ }),
 /* 28 */
@@ -31889,156 +31998,6 @@ UChar.udata={
 
 /***/ }),
 /* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Process block-level custom containers
-//
-
-
-
-module.exports = function container_plugin(md, name, options) {
-
-  function validateDefault(params) {
-    return params.trim().split(' ', 2)[0] === name;
-  }
-
-  function renderDefault(tokens, idx, _options, env, self) {
-
-    // add a class to the opening tag
-    if (tokens[idx].nesting === 1) {
-      tokens[idx].attrPush([ 'class', name ]);
-    }
-
-    return self.renderToken(tokens, idx, _options, env, self);
-  }
-
-  options = options || {};
-
-  var min_markers = 3,
-      marker_str  = options.marker || ':',
-      marker_char = marker_str.charCodeAt(0),
-      marker_len  = marker_str.length,
-      validate    = options.validate || validateDefault,
-      render      = options.render || renderDefault;
-
-  function container(state, startLine, endLine, silent) {
-    var pos, nextLine, marker_count, markup, params, token,
-        old_parent, old_line_max,
-        auto_closed = false,
-        start = state.bMarks[startLine] + state.tShift[startLine],
-        max = state.eMarks[startLine];
-
-    // Check out the first character quickly,
-    // this should filter out most of non-containers
-    //
-    if (marker_char !== state.src.charCodeAt(start)) { return false; }
-
-    // Check out the rest of the marker string
-    //
-    for (pos = start + 1; pos <= max; pos++) {
-      if (marker_str[(pos - start) % marker_len] !== state.src[pos]) {
-        break;
-      }
-    }
-
-    marker_count = Math.floor((pos - start) / marker_len);
-    if (marker_count < min_markers) { return false; }
-    pos -= (pos - start) % marker_len;
-
-    markup = state.src.slice(start, pos);
-    params = state.src.slice(pos, max);
-    if (!validate(params)) { return false; }
-
-    // Since start is found, we can report success here in validation mode
-    //
-    if (silent) { return true; }
-
-    // Search for the end of the block
-    //
-    nextLine = startLine;
-
-    for (;;) {
-      nextLine++;
-      if (nextLine >= endLine) {
-        // unclosed block should be autoclosed by end of document.
-        // also block seems to be autoclosed by end of parent
-        break;
-      }
-
-      start = state.bMarks[nextLine] + state.tShift[nextLine];
-      max = state.eMarks[nextLine];
-
-      if (start < max && state.sCount[nextLine] < state.blkIndent) {
-        // non-empty line with negative indent should stop the list:
-        // - ```
-        //  test
-        break;
-      }
-
-      if (marker_char !== state.src.charCodeAt(start)) { continue; }
-
-      if (state.sCount[nextLine] - state.blkIndent >= 4) {
-        // closing fence should be indented less than 4 spaces
-        continue;
-      }
-
-      for (pos = start + 1; pos <= max; pos++) {
-        if (marker_str[(pos - start) % marker_len] !== state.src[pos]) {
-          break;
-        }
-      }
-
-      // closing code fence must be at least as long as the opening one
-      if (Math.floor((pos - start) / marker_len) < marker_count) { continue; }
-
-      // make sure tail has spaces only
-      pos -= (pos - start) % marker_len;
-      pos = state.skipSpaces(pos);
-
-      if (pos < max) { continue; }
-
-      // found!
-      auto_closed = true;
-      break;
-    }
-
-    old_parent = state.parentType;
-    old_line_max = state.lineMax;
-    state.parentType = 'container';
-
-    // this will prevent lazy continuations from ever going past our end marker
-    state.lineMax = nextLine;
-
-    token        = state.push('container_' + name + '_open', 'div', 1);
-    token.markup = markup;
-    token.block  = true;
-    token.info   = params;
-    token.map    = [ startLine, nextLine ];
-
-    state.md.block.tokenize(state, startLine + 1, nextLine);
-
-    token        = state.push('container_' + name + '_close', 'div', -1);
-    token.markup = state.src.slice(start, pos);
-    token.block  = true;
-
-    state.parentType = old_parent;
-    state.lineMax = old_line_max;
-    state.line = nextLine + (auto_closed ? 1 : 0);
-
-    return true;
-  }
-
-  md.block.ruler.before('fence', 'container_' + name, container, {
-    alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]
-  });
-  md.renderer.rules['container_' + name + '_open'] = render;
-  md.renderer.rules['container_' + name + '_close'] = render;
-};
-
-
-/***/ }),
-/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32107,9 +32066,9 @@ var markdown_it_task_lists_default = /*#__PURE__*/__webpack_require__.n(markdown
 var markdown_it_bracketed_spans = __webpack_require__(26);
 var markdown_it_bracketed_spans_default = /*#__PURE__*/__webpack_require__.n(markdown_it_bracketed_spans);
 
-// EXTERNAL MODULE: ./node_modules/markdown-it-alerts/index.js
-var markdown_it_alerts = __webpack_require__(27);
-var markdown_it_alerts_default = /*#__PURE__*/__webpack_require__.n(markdown_it_alerts);
+// EXTERNAL MODULE: ./node_modules/markdown-it-container-pandoc/index.js
+var markdown_it_container_pandoc = __webpack_require__(27);
+var markdown_it_container_pandoc_default = /*#__PURE__*/__webpack_require__.n(markdown_it_container_pandoc);
 
 // EXTERNAL MODULE: ./node_modules/markdown-it-collapsible/index.js
 var markdown_it_collapsible = __webpack_require__(28);
@@ -32279,6 +32238,10 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
       default: htmlData => {
         return htmlData;
       }
+    },
+    slugify: {
+      type: Function,
+      default: null
     }
   },
   computed: {
@@ -32289,7 +32252,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
   },
 
   render(createElement) {
-    this.md = new markdown_it_default.a().use(markdown_it_sub_default.a).use(markdown_it_sup_default.a).use(markdown_it_footnote_default.a).use(markdown_it_deflist_default.a).use(markdown_it_abbr_default.a).use(markdown_it_ins_default.a).use(markdown_it_mark_default.a).use(markdown_it_alerts_default.a).use(markdown_it_task_lists_default.a, {
+    this.md = new markdown_it_default.a().use(markdown_it_sub_default.a).use(markdown_it_sup_default.a).use(markdown_it_footnote_default.a).use(markdown_it_deflist_default.a).use(markdown_it_abbr_default.a).use(markdown_it_ins_default.a).use(markdown_it_mark_default.a).use(markdown_it_container_pandoc_default.a).use(markdown_it_task_lists_default.a, {
       enabled: this.taskLists
     });
 
@@ -32331,6 +32294,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
 
     this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
       Object.keys(this.anchorAttributes).map(attribute => {
+        if (!tokens[idx].attrIndex) return;
         let aIndex = tokens[idx].attrIndex(attribute);
         let value = this.anchorAttributes[attribute];
 
@@ -32354,13 +32318,14 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
         anchorLinkBefore: this.tocAnchorBefore,
         anchorClassName: this.tocAnchorClass,
         anchorLinkSymbolClassName: this.tocAnchorLinkClass,
+        slugify: this.slugify,
         tocCallback: (tocMarkdown, tocArray, tocHtml) => {
           if (tocHtml) {
             if (this.tocId && document.getElementById(this.tocId)) {
               document.getElementById(this.tocId).innerHTML = tocHtml;
             }
 
-            this.$emit('toc-rendered', tocHtml);
+            this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray);
           }
         }
       });

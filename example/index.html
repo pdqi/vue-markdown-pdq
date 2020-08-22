@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>simple</title>
+  <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
+  <script src="../../dist/vue-markdown-pdq.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
+  <style>
+    .red {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <vue-markdown-pdq :anchor-attributes="anchorAttrs">
+
+    [A link to a website](https://google.com)
+
+SyntaxHighlighter by highlight.js:
+
+``` js
+function doit(now) {
+  return 'right '+now;
+}
+```
+**Custom Style**: Adds *style*{.red} using custom classes and ids
+
+**Inline Math**: $\sqrt{3x-1}+(1+x)^2$
+
+**Block Math**
+
+$$\begin{array}{c}
+
+  \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
+  = \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
+
+  \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
+
+  \nabla \cdot \vec{\mathbf{B}} & = 0
+
+  \end{array}$$
+
+### Solar System Exploration, 1950s – 1960s
+
+- [ ] Mercury
+- [x] Venus
+- [x] Earth (Orbit/Moon)
+- [x] Mars
+- [ ] Jupiter
+- [ ] Saturn
+- [ ] Uranus
+- [ ] Neptune
+- [ ] Comet Haley
+
+    </vue-markdown-pdq>
+  </div>
+  <script>
+    Vue.use(VueMarkdownPdq);
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          anchorAttrs: {
+            target: '_blank',
+            rel: 'noopener noreferrer nofollow'
+          }
+        }
+      },
+    });
+</script>
+</body>
+
+</html>

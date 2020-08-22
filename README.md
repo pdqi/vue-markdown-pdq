@@ -106,10 +106,10 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 # Events
 
-| Name | Param[Type] | Describe |
+| Name | Params[Type] | Describe |
 | ---- | --------- | -------- |
 | rendered | outHtml[String] | dispatch when render finish |
-| toc-rendered | tocHtml[String] | dispatch when TOC render finish, never dispatch if the toc[prop] is `false` |
+| toc-rendered | tocHtml[String], markdown[String], list[Array] | dispatch when TOC render finish, never dispatch if the toc[prop] is `false` |
 
 # Thanks
 
