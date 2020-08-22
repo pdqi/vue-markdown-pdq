@@ -73,6 +73,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    pandoc: {
+      type: Boolean,
+      default: true,
+    },
     attrs: {
       type: Boolean,
       default: true,
@@ -80,10 +84,6 @@ export default {
     attrOpts: {
       type: Object,
       default: () => ({ allowedAttributes: ['id', 'class', 'name', /^data-.*$/] })
-    },
-    container: {
-      type: Boolean,
-      default: true,
     },
     typographer: {
       type: Boolean,
@@ -180,7 +180,6 @@ export default {
       .use(abbreviation)
       .use(insert)
       .use(mark)
-      .use(pandoc)
       .use(tasklists, { enabled: this.taskLists })
 
     if (this.katex) {
@@ -188,6 +187,9 @@ export default {
     }
     if (this.emoji) {
       this.md.use(emoji)
+    }
+    if (this.pandoc) {
+      this.md.use(pandoc)
     }
     if (this.attrs) {
       this.md.use(attributes, this.attrOpts)

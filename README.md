@@ -26,7 +26,7 @@ Supported Markdown Syntax:
 * [x] emoji
 * [x] mark
 * [x] collapsible
-* [x] alerts
+* [x] pandoc blocks
 
 `*SyntaxHighlighter` work with [Prism](https://prismjs.com)
 
@@ -34,7 +34,9 @@ Supported Markdown Syntax:
 
 # Example
 
-[Live Demo](./example/simple/index.html)
+[Demo Page](./example/index.html)
+[Source](https://jsish.org/fossil/vue-markdown-pdq)
+[Github](https://github.com/pcmacdon/vue-markdown-pdq)
 
 # Installation
 
@@ -83,6 +85,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | katex | Boolean | `true` | latex math support |
 | attrs | Boolean | `true` | enable attrs/spans support |
 | attrOpts | Object | `{allowedAttributes: ['id', 'class', 'name', /^data-.*$/]}` | options for attrs |
+| pandoc | Boolean | `true` | enable pandoc support |
 | typographer | Boolean | `true` | enable some language-neutral replacement and quotes beautification |
 | collapsible | Boolean | `true` | enable collapsibles |
 | lang-prefix | String | `language-` | CSS language prefix for fenced blocks |
@@ -113,6 +116,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 # Thanks
 
+- [vue-markdown](https://github.com/miaolz123/vue-markdown)
 - [markdown-it](https://github.com/markdown-it/markdown-it)
 - [miaolz123](https://github.com/miaolz123)
 - [transtone](https://github.com/transtone)
@@ -120,6 +124,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 # Contributions
 
+- [pcmacdon](https://github.com/pcmacdon)
 - [6etacat](https://github.com/6etacat)
 - [miaolz123](https://github.com/miaolz123)
 - [brandonferens](https://github.com/brandonferens)

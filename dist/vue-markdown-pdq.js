@@ -32147,6 +32147,10 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
       type: Boolean,
       default: true
     },
+    pandoc: {
+      type: Boolean,
+      default: true
+    },
     attrs: {
       type: Boolean,
       default: true
@@ -32156,10 +32160,6 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
       default: () => ({
         allowedAttributes: ['id', 'class', 'name', /^data-.*$/]
       })
-    },
-    container: {
-      type: Boolean,
-      default: true
     },
     typographer: {
       type: Boolean,
@@ -32252,7 +32252,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
   },
 
   render(createElement) {
-    this.md = new markdown_it_default.a().use(markdown_it_sub_default.a).use(markdown_it_sup_default.a).use(markdown_it_footnote_default.a).use(markdown_it_deflist_default.a).use(markdown_it_abbr_default.a).use(markdown_it_ins_default.a).use(markdown_it_mark_default.a).use(markdown_it_container_pandoc_default.a).use(markdown_it_task_lists_default.a, {
+    this.md = new markdown_it_default.a().use(markdown_it_sub_default.a).use(markdown_it_sup_default.a).use(markdown_it_footnote_default.a).use(markdown_it_deflist_default.a).use(markdown_it_abbr_default.a).use(markdown_it_ins_default.a).use(markdown_it_mark_default.a).use(markdown_it_task_lists_default.a, {
       enabled: this.taskLists
     });
 
@@ -32265,6 +32265,10 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
 
     if (this.emoji) {
       this.md.use(markdown_it_emoji_default.a);
+    }
+
+    if (this.pandoc) {
+      this.md.use(markdown_it_container_pandoc_default.a);
     }
 
     if (this.attrs) {

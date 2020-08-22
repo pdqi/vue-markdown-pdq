@@ -4,75 +4,365 @@
 <head>
   <title>simple</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
-  <script src="../../dist/vue-markdown-pdq.js"></script>
+  <script src="../dist/vue-markdown-pdq.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.css">
   <style>
     .red {
       color: red;
     }
+    .bg-info {
+      background: lightblue;
+      padding:4px;
+    }
+    label {padding-left:10px; }
   </style>
 </head>
 
 <body>
+    
   <div id="app">
-    <vue-markdown-pdq :anchor-attributes="anchorAttrs">
+    
+<div ref="data" style="display:none">
+https://github.com/pcmacdon/vue-markdown/pdq
 
-    [A link to a website](https://google.com)
+## Typographic replacements
 
-SyntaxHighlighter by highlight.js:
+Enable typographer option to see result.
 
-``` js
-function doit(now) {
-  return 'right '+now;
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+
+!!!!!! ???? ,,  -- ---
+
+"Smartypants, double quotes" and 'single quotes'
+
+### Attributes and Spans
+
+paragraph *style me*{.red} more text
+
+paragraph with [a style me span]{.red}
+
+``` {.red}
+// Styled code block
+function foo() {
+    return 0;
 }
 ```
-**Custom Style**: Adds *style*{.red} using custom classes and ids
 
-**Inline Math**: $\sqrt{3x-1}+(1+x)^2$
+### Emojies
 
-**Block Math**
+> Classic markup: :wink: :cry: :laughing: :yum: :warning:
+>
+> Shortcuts (emoticons): :-) :-( 8-) ;)
 
-$$\begin{array}{c}
 
-  \nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-  = \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
+# h1 Heading
+<h2> h2 Heading by HTML</h2>
 
-  \nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
+## h2 Heading
+### h3 Heading
 
-  \nabla \cdot \vec{\mathbf{B}} & = 0
+## Horizontal Rules
 
-  \end{array}$$
+___
 
-### Solar System Exploration, 1950s – 1960s
+---
 
-- [ ] Mercury
-- [x] Venus
-- [x] Earth (Orbit/Moon)
-- [x] Mars
-- [ ] Jupiter
-- [ ] Saturn
-- [ ] Uranus
-- [ ] Neptune
-- [ ] Comet Haley
+***
 
-    </vue-markdown-pdq>
+## Emphasis
+
+**This is bold text**
+
+__This is bold text__
+
+*This is italic text*
+
+_This is italic text_
+
+~~Strikethrough~~
+
+
+## Blockquotes
+
+
+> Blockquotes can also be nested...
+>> ...by using additional greater-than signs right next to each other...
+> > > ...or with spaces between arrows.
+
+
+## Lists
+
+Unordered
+
++ Create a list by starting a line with `+`, `-`, or `*`
++ Sub-lists are made by indenting 2 spaces:
+  - Marker character change forces new list start:
+    * Ac tristique libero volutpat at
+    + Facilisis in pretium nisl aliquet
+    - Nulla volutpat aliquam velit
++ Very easy!
+
+Ordered
+
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
+
+
+1. You can use sequential numbers...
+1. ...or keep all the numbers as `1.`
+
+Start numbering with offset:
+
+57. foo
+1. bar
+
+
+## Blocks
+
+Inline `code`
+
+Indented code
+
+    // Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+
+
+Block code "fences"
+
+```
+Sample text here...
+```
+
+Syntax highlighting
+
+``` js
+var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+```
+
+::: {.bg-info}
+Pandoc **styled** blocks
+:::
+
++++ Collapsible
+Stuff you **want** to see is here :)
+
++++ Sub-collapsible
+Nested as well.
++++
+
+
+## Tables
+
+| Option | Description |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
+Right aligned columns
+
+| Option | Description |
+| ------:| -----------:|
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
+## Links
+
+[vue-markdown](https://github.com/miaolz123/vue-markdown)
+
+[link with title](https://github.com/miaolz123/vue-markdown "VueMarkdown")
+
+Autoconverted link https://github.com/miaolz123/vue-markdown (enable linkify to see)
+
+
+## Images
+
+![Minion](logo.png)
+
+Like links, Images also have a footnote style syntax
+
+![Alt text][id]
+
+With a reference later in the document defining the URL location:
+
+[id]: logo.png  "Jsi Logo"
+
+
+
+### Subscript / Superscript
+
+- 19^th^
+- H~2~O
+
+
+### \<ins>
+
+++Inserted text++
+
+
+### \<mark>
+
+==Marked text==
+
+
+### Footnotes
+
+Footnote 1 link[^first].
+
+Footnote 2 link[^second].
+
+Inline footnote^[Text of inline footnote] definition.
+
+Duplicated footnote reference[^second].
+
+[^first]: Footnote **can have markup**
+
+    and multiple paragraphs.
+
+[^second]: Footnote text.
+
+
+### Definition lists
+
+Term 1
+
+:   Definition 1
+with lazy continuation.
+
+Term 2 with *inline markup*
+
+:   Definition 2
+
+        { some code, part of Definition 2 }
+
+    Third paragraph of definition 2.
+
+_Compact style:_
+
+Term 1
+  ~ Definition 1
+
+Term 2
+  ~ Definition 2a
+  ~ Definition 2b
+
+
+### Abbreviations
+
+This is HTML abbreviation example.
+
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+
+*[HTML]: Hyper Text Markup Language
+</div>
+
+    <div class="form-inline" style="padding:5px">
+      <span class="checkbox">
+        <label><input v-model="show" type="checkbox">show</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="html" type="checkbox">html</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="breaks" type="checkbox">breaks</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="linkify" type="checkbox">linkify</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="emoji" type="checkbox">emoji</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="typographer" type="checkbox">typographer</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="toc" type="checkbox">toc</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="collapsible" type="checkbox">collapsible</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="attrs" type="checkbox">attrs</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="pandoc" type="checkbox">pandoc</label>
+      </span>
+    </div>
+    <div v-html="tocVal"></div>
+
+    <table width="100%">
+        <tr>
+            <td width="50%" valign="top">
+                <textarea style="width:100%;" rows="300" class="source full-height" v-model="source"></textarea></td>
+            <td width="50%" valign="top">
+                <vue-markdown-pdq style="padding-left:4px"
+                :anchor-attributes="anchorAttrs"
+                
+                class="result-html full-height" :watches="['show','html','breaks','linkify','emoji','attrs','collapsible', 'typographer','toc']"
+          :source="source" :show="show" :html="html" :breaks="breaks" :linkify="linkify"
+          :emoji="emoji" :typographer="typographer" :toc="toc" v-on:rendered="allRight"
+          :collapsible="collapsible" :attrs="attrs" :pandoc="pandoc"
+          v-on:toc-rendered="tocAllRight"
+            />
+            </td>
+        </tr>
+    </table>
+
   </div>
   <script>
     Vue.use(VueMarkdownPdq);
     new Vue({
       el: '#app',
+      mounted() {
+          this.source = this.$refs.data.innerHTML;
+      },
       data() {
         return {
-          anchorAttrs: {
-            target: '_blank',
-            rel: 'noopener noreferrer nofollow'
+            source:'',
+            show: true,
+            html: false,
+            breaks: true,
+            linkify: false,
+            emoji: true,
+            typographer: true,
+            toc: false,
+            collapsible:true,
+            attrs:true,
+            pandoc:true,
+            tocVal:'',
+            anchorAttrs: {
+              target: '_blank',
+              rel: 'noopener noreferrer nofollow'
+            }
           }
+      },
+      methods: {
+        allRight: function (htmlStr) {
+          console.log("markdown is parsed !");
+          if (!this.toc)
+              this.tocVal = '';
+        },
+        tocAllRight: function (tocHtmlStr) {
+          this.tocVal = tocHtmlStr;
         }
       },
     });
 </script>
+
+
 </body>
 
 </html>
