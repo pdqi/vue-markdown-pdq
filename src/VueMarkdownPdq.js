@@ -83,7 +83,7 @@ export default {
     },
     attrOpts: {
       type: Object,
-      default: () => ({ allowedAttributes: ['id', 'class', 'name', /^data-.*$/] })
+      default: () => ({ allowedAttributes: ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/] })
     },
     typographer: {
       type: Boolean,

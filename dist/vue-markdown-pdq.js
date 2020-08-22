@@ -32158,7 +32158,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
     attrOpts: {
       type: Object,
       default: () => ({
-        allowedAttributes: ['id', 'class', 'name', /^data-.*$/]
+        allowedAttributes: ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]
       })
     },
     typographer: {

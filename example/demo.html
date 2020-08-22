@@ -2,14 +2,18 @@
 <html>
 
 <head>
-  <title>simple</title>
+  <title>Vue Markdown PDQ</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
   <script src="../dist/vue-markdown-pdq.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.css">
   <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+            "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+            "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
     .red {
       color: red;
     }
@@ -17,7 +21,38 @@
       background: lightblue;
       padding:4px;
     }
+    .mytbl th{color:#FFF;background-color:#AAA;border:1px solid #888;padding:8px 15px 8px 15px}
+    .mytbl td{padding:5px 15px 5px 15px;border:1px solid #888}
+    .mytbl tr:nth-child(even){background:#EEE}
+    .tcenter table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .icenter {
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+    }
+    
     label {padding-left:10px; }
+
+    body {
+        position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:lightgray; margin:0;
+        background:white;
+    }
+    .forminput {
+        position: fixed;
+        top: 0;
+        z-index: 1071;
+        width:100%;
+        background-color: #c9e4e8;
+        box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
+    }
+    .mainwin {
+        margin-top:50px;
+    }
+    #app { height:100%; width:100%; }
+
   </style>
 </head>
 
@@ -58,7 +93,6 @@ function foo() {
 > Classic markup: :wink: :cry: :laughing: :yum: :warning:
 >
 > Shortcuts (emoticons): :-) :-( 8-) ;)
-
 
 # h1 Heading
 <h2> h2 Heading by HTML</h2>
@@ -125,6 +159,7 @@ Start numbering with offset:
 
 ## Blocks
 
+### Code
 Inline `code`
 
 Indented code
@@ -151,12 +186,15 @@ var foo = function (bar) {
 console.log(foo(5));
 ```
 
+### Pandocs
 ::: {.bg-info}
-Pandoc **styled** blocks
+:warning: Pandoc **styled** blocks
 :::
 
+### Collapsible
+
 +++ Collapsible
-Stuff you **want** to see is here :)
+Stuff you **want** to see here ;)
 
 +++ Sub-collapsible
 Nested as well.
@@ -171,13 +209,15 @@ Nested as well.
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
-Right aligned columns
+Right aligned columns and styling
 
+::: {.mytbl .tcenter}
 | Option | Description |
 | ------:| -----------:|
 | data   | path to data files to supply the data that will be passed into templates. |
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
+:::
 
 ## Links
 
@@ -190,10 +230,11 @@ Autoconverted link https://github.com/miaolz123/vue-markdown (enable linkify to 
 
 ## Images
 
-![Minion](logo.png)
+![Logo](logo.png)
 
 Like links, Images also have a footnote style syntax
 
+![Alt text][id]
 ![Alt text][id]
 
 With a reference later in the document defining the URL location:
@@ -201,6 +242,13 @@ With a reference later in the document defining the URL location:
 [id]: logo.png  "Jsi Logo"
 
 
+![Attrs][id]
+
+Attributes
+
+![Logo](logo.png){width=100 height=100 title="Using attrs"}
+
+![Logo](logo2.png){.icenter style="width:30px; height:30px;" title="Using attrs to center and lazy-load" loading="lazy"}
 
 ### Subscript / Superscript
 
@@ -268,8 +316,8 @@ It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
 
 *[HTML]: Hyper Text Markup Language
 </div>
-
-    <div class="form-inline" style="padding:5px">
+    <div class="forminput" style="padding:5px">
+      <span><a href="../README.md">Vue-Markdown-PDQ</a> Demo: </span>
       <span class="checkbox">
         <label><input v-model="show" type="checkbox">show</label>
       </span>
@@ -301,6 +349,7 @@ It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
         <label><input v-model="pandoc" type="checkbox">pandoc</label>
       </span>
     </div>
+    <div class="mainwin">
     <div v-html="tocVal"></div>
 
     <table width="100%">
@@ -321,6 +370,7 @@ It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
         </tr>
     </table>
 
+  </div>
   </div>
   <script>
     Vue.use(VueMarkdownPdq);

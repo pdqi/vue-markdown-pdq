@@ -6,6 +6,12 @@ A powerful and highspeed Markdown component for Vue.
 
 An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
 
+# Source
+
+- [Demo Page](./example/demo.html)
+- [Source](https://jsish.org/fossil/vue-markdown-pdq)
+- [Github](https://github.com/pcmacdon/vue-markdown-pdq)
+
 Quick start: `<vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>`
 
 Supported Markdown Syntax:
@@ -31,12 +37,6 @@ Supported Markdown Syntax:
 `*SyntaxHighlighter` work with [Prism](https://prismjs.com)
 
 `*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
-
-# Source
-
-- [Demo Page](./example/index.html)
-- [Source](https://jsish.org/fossil/vue-markdown-pdq)
-- [Github](https://github.com/pcmacdon/vue-markdown-pdq)
 
 # Installation
 
@@ -84,7 +84,8 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | emoji | Boolean | `true` | `:)` => `😃` |
 | katex | Boolean | `true` | latex math support |
 | attrs | Boolean | `true` | enable attrs/spans support |
-| attrOpts | Object | `{allowedAttributes: ['id', 'class', 'name', /^data-.*$/]}` | options for attrs |
+| attrOpts | Object | `{allowedAttributes: SEE BELOW}` | options for attrs |
+| attrStyle | Boolean | `true` | add **style** to attrOpts |
 | pandoc | Boolean | `true` | enable pandoc support |
 | typographer | Boolean | `true` | enable some language-neutral replacement and quotes beautification |
 | collapsible | Boolean | `true` | enable collapsibles |
@@ -106,6 +107,13 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | anchorAttributes | Object | `{}` | anchor tag attributes such as `target: '_blank'` or `rel: 'nofollow'` |
 | prerender | Function (String) String | `null` | filter function before markdown parse |
 | postrender | Function (String) String | `null` | filter function after markdown parse |
+
+## attrOpts
+
+The default attributes allowed are:
+```
+{'id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/}
+```
 
 # Events
 
