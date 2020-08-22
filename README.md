@@ -4,7 +4,7 @@
 
 A powerful and highspeed Markdown component for Vue.
 
-An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have dormant. 
+An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
 
 Quick start: `<vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>`
 
@@ -32,11 +32,11 @@ Supported Markdown Syntax:
 
 `*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
 
-# Example
+# Source
 
-[Demo Page](./example/index.html)
-[Source](https://jsish.org/fossil/vue-markdown-pdq)
-[Github](https://github.com/pcmacdon/vue-markdown-pdq)
+- [Demo Page](./example/index.html)
+- [Source](https://jsish.org/fossil/vue-markdown-pdq)
+- [Github](https://github.com/pcmacdon/vue-markdown-pdq)
 
 # Installation
 
@@ -139,4 +139,4 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 # License
 
-Copyright (c) 2020 [pmacdona](https://jsish.org/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
+Copyright (c) 2020 [pcmacdon](https://github.com/pcmacdon/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
