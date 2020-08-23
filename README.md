@@ -74,7 +74,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
-| anchor-attributes | Object | `{}` | anchor tag attributes such as `target: '_blank'` or `rel: 'nofollow'` |
+| anchor-attributes | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
 | attr-opts | Object | SEE BELOW | option passed to attrs |
 | attrs | Boolean | `true` | enable attrs/spans support |
 | breaks | Boolean | `false` | `\n` => `<br>` |
@@ -146,4 +146,4 @@ Default for **attr-opts** is:
 
 # License
 
-Copyright (c) 2020 [pcmacdon](https://github.com/pcmacdon/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
+Copyright (c) 2020 [pcmacdon](https://github.com/pdqi/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
