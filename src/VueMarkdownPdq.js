@@ -55,7 +55,7 @@ export default {
     },
     breaks: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     linkify: {
       type: Boolean,

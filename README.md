@@ -8,8 +8,7 @@ An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-m
 
 # Source
 
-- [Demo Page](./example/demo.html)
-- [Demo Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html)
+- [Demo Page](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) or [Local](./example/demo.html) for fossil.
 - [Source](https://jsish.org/fossil/vue-markdown-pdq)
 - [Github](https://github.com/pdqi/vue-markdown-pdq)
 
@@ -80,7 +79,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | show | Boolean | `true` | enable render to the default slot automatically |
 | html | Boolean | `true` | enable HTML syntax in source |
 | xhtml-out | Boolean | `true` | `<br></br>` => `<br />` |
-| breaks | Boolean | `true` | `\n` => `<br>` |
+| breaks | Boolean | `false` | `\n` => `<br>` |
 | linkify | Boolean | `true` | autoconvert URL-like text to link |
 | emoji | Boolean | `true` | `:)` => `😃` |
 | katex | Boolean | `true` | latex math support |

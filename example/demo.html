@@ -40,6 +40,15 @@
         position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:lightgray; margin:0;
         background:white;
     }
+    .mainwin {
+        margin-top:50px;
+    }
+    :target::before {
+      content: "";
+      display: block;
+      height: 50px; /* fixed header height*/
+      margin: -50px 0 0; /* negative fixed header height */
+    }
     .forminput {
         position: fixed;
         top: 0;
@@ -47,9 +56,6 @@
         width:100%;
         background-color: #c9e4e8;
         box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
-    }
-    .mainwin {
-        margin-top:50px;
     }
     #app { height:100%; width:100%; }
 
@@ -98,14 +104,15 @@
     <table width="100%">
         <tr>
             <td width="50%" valign="top">
-                <textarea style="width:100%;" rows="300" class="source full-height" v-model="source"></textarea></td>
+                <textarea style="width:100%;" rows="400" class="source full-height" v-model="source"></textarea></td>
             <td width="50%" valign="top">
                 <vue-markdown-pdq
                     style="padding-left:4px; border:1px solid;"
                     class="result-html full-height"
-                    v-on:rendered="allRight"
-                    v-on:toc-rendered="tocAllRight"
+                    v-on:rendered="rendered"
+                    v-on:toc-rendered="tocRendered"
                     :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
+                    :toc-anchor-link-space="false"
 
                     :watches="['show','html','breaks','linkify','emoji','attrs','collapsible', 'typographer','toc']"
                     :source="source" :show="show" :html="html" :breaks="breaks" :linkify="linkify"
@@ -127,31 +134,34 @@
       },
       data() {
         return {
-            show:true, html:false, breaks:true, attrs:true, 
+            show:true, html:false, breaks:false, attrs:true, 
             linkify:false, emoji:true, toc:false, pandoc:true,
             typographer:true, collapsible:true, source:'', tocVal:'',
           }
       },
       methods: {
-        allRight: function (htmlStr) {
-          console.log("markdown is parsed !");
+        rendered: function (htmlStr) {
+          console.log("markdown parsed");
           if (!this.toc)
               this.tocVal = '';
         },
-        tocAllRight: function (tocHtmlStr) {
+        tocRendered: function (tocHtmlStr) {
           this.tocVal = tocHtmlStr;
         }
       },
     });
   }
+/********************** END OF CODE **************************************/
 </script>
+
+
 
 <script ref="markdata" type="text/x-template">
 https://github.com/pdqi/vue-markdown-pdq
 
-## Typographic replacements
+## Typographic
 
-Enable typographer option to see result.
+Try toggling **typographer** to see replacements.
 
 (c) (C) (r) (R) (tm) (TM) (p) (P) +-
 
@@ -161,7 +171,10 @@ test.. test... test..... test?..... test!....
 
 "Smartypants, double quotes" and 'single quotes'
 
-### Attributes and Spans
+
+
+
+### Spans/Attributes
 
 paragraph *style me*{.red} more text
 
@@ -174,14 +187,19 @@ function foo() {
 }
 ```
 
+
 ### Emojies
 
 > Classic markup: :wink: :cry: :laughing: :yum: :warning:
 >
 > Shortcuts (emoticons): :-) :-( 8-) ;)
 
+The full list is [here](https://github.com/markdown-it/markdown-it-emoji/blob/master/lib/data/full.json)
+
+
+
 # h1 Heading
-<h2> h2 Heading by HTML</h2>
+ h2 Heading by HTML
 
 ## h2 Heading
 ### h3 Heading
@@ -194,23 +212,32 @@ ___
 
 ***
 
+
+
+
+
+
 ## Emphasis
 
 **This is bold text**
 
-__This is bold text__
+__Also bold text__
 
 *This is italic text*
 
-_This is italic text_
+_Also italic text_
 
 ~~Strikethrough~~
 
 Inline `code`
 
+
+
+
+
 ## Lists
 
-Unordered
+### Unordered
 
 + Create a list by starting a line with `+`, `-`, or `*`
 + Sub-lists are made by indenting 2 spaces:
@@ -220,7 +247,11 @@ Unordered
     - Nulla volutpat aliquam velit
 + Very easy!
 
-Ordered
+
+
+
+
+### Ordered
 
 1. Lorem ipsum dolor sit amet
 2. Consectetur adipiscing elit
@@ -230,10 +261,17 @@ Ordered
 1. You can use sequential numbers...
 1. ...or keep all the numbers as `1.`
 
-Start numbering with offset:
+
+
+
+### Number Offset
 
 57. foo
 1. bar
+
+
+
+
 
 ## Blocks
 
@@ -244,6 +282,9 @@ Start numbering with offset:
 > Blockquotes can also be nested...
 >> ...by using additional greater-than signs right next to each other...
 > > > ...or with spaces between arrows.
+
+
+
 
 ### Code
 
@@ -271,6 +312,8 @@ var foo = function (bar) {
 console.log(foo(5));
 ```
 
+
+
 ### Pandocs
 ::: {.bg-info}
 :warning: Pandoc **styled** blocks
@@ -279,10 +322,10 @@ console.log(foo(5));
 ### Collapsible
 
 +++ Collapsible
-Stuff you **want** to see here ;)
+Stuff you **may** want to see ...
 
 +++ Sub-collapsible
-Nested as well.
+and possibly this as well. ;)
 +++
 
 
@@ -294,7 +337,7 @@ Nested as well.
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
-Right aligned columns and styling
+### Styled
 
 ::: {.mytbl .tcenter}
 | Option | Description |
@@ -303,6 +346,9 @@ Right aligned columns and styling
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 :::
+
+
+
 
 ## Links
 
@@ -313,44 +359,109 @@ Right aligned columns and styling
 Autoconverted link https://github.com/miaolz123/vue-markdown (enable linkify to see)
 
 
-## Images
-
-![Logo](logo.png)
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: logo.png  "Jsi Logo"
 
 
-![Attrs][id]
 
-Attributes
-
-![Logo](logo.png){width=100 height=100 title="Using attrs"}
-
-![Logo](logo2.png){.icenter style="width:30px; height:30px;" title="Using attrs to center and lazy-load" loading="lazy"}
 
 ## Special
+
 ### Subscript / Superscript
 
 - 19^th^
 - H~2~O
 
-### \<ins>
+
+
+
+### Insert
 
 ++Inserted text++
 
 
-### \<mark>
+
+### Mark
 
 ==Marked text==
 
-### Footnotes
+
+## Definition lists
+
+Term 1
+
+:   Definition 1
+with lazy continuation.
+
+Term 2 with *inline markup*
+
+:   Definition 2
+
+        { some code, part of Definition 2 }
+
+    Third paragraph of definition 2.
+
+
+
+### Compact
+
+Term 1
+  ~ Definition 1
+
+Term 2
+  ~ Definition 2a
+  ~ Definition 2b
+
+
+
+## Abbreviations
+
+This is HTML abbreviation example.
+
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+
+*[HTML]: Hyper Text Markup Language
+
+
+## Images
+
+![Logo](logo.png)
+
+
+
+
+
+### Attributes
+![Logo](logo.png){width=100 height=100 title="Using attrs"}
+
+![Logo](logo2.png){.icenter style="width:30px; height:30px;" title="Using attrs to center and lazy-load" loading="lazy"}
+
+
+
+
+
+
+
+
+### Background
+::: {style="background:url(logo.png); "}
+This section has a background image.
+
+The end.
+:::
+
+
+### Text Ref
+Like links, Images also have a footnote reference syntax:
+
+![Ref 1][id]
+![Ref 2][id]
+
+With a reference later in the document defining the URL and ALT to use:
+
+[id]: logo.png  "Jsi Logo"
+
+
+
+## Footnotes
 
 Footnote 1 link[^first].
 
@@ -366,39 +477,6 @@ Duplicated footnote reference[^second].
 
 [^second]: Footnote text.
 
-
-### Definition lists
-
-Term 1
-
-:   Definition 1
-with lazy continuation.
-
-Term 2 with *inline markup*
-
-:   Definition 2
-
-        { some code, part of Definition 2 }
-
-    Third paragraph of definition 2.
-
-_Compact style:_
-
-Term 1
-  ~ Definition 1
-
-Term 2
-  ~ Definition 2a
-  ~ Definition 2b
-
-
-### Abbreviations
-
-This is HTML abbreviation example.
-
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-
-*[HTML]: Hyper Text Markup Language
 </script>
 
 <script>main();</script>

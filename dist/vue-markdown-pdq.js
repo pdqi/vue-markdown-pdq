@@ -32129,7 +32129,7 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
     },
     breaks: {
       type: Boolean,
-      default: true
+      default: false
     },
     linkify: {
       type: Boolean,
