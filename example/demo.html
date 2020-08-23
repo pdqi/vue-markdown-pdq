@@ -59,9 +59,95 @@
 <body>
     
   <div id="app">
-    
-<div ref="data" style="display:none">
-https://github.com/pcmacdon/vue-markdown/pdq
+    <div class="forminput" style="padding:5px">
+      <span><a href="../README.md" target="_blank">Vue-Markdown-PDQ</a> Demo: </span>
+      <span class="checkbox">
+        <label><input v-model="show" type="checkbox">show</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="html" type="checkbox">html</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="breaks" type="checkbox">breaks</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="linkify" type="checkbox">linkify</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="emoji" type="checkbox">emoji</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="typographer" type="checkbox">typographer</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="toc" type="checkbox">toc</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="collapsible" type="checkbox">collapsible</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="attrs" type="checkbox">attrs</label>
+      </span>
+      <span class="checkbox">
+        <label><input v-model="pandoc" type="checkbox">pandoc</label>
+      </span>
+    </div>
+    <div class="mainwin">
+    <div v-html="tocVal"></div>
+
+    <table width="100%">
+        <tr>
+            <td width="50%" valign="top">
+                <textarea style="width:100%;" rows="300" class="source full-height" v-model="source"></textarea></td>
+            <td width="50%" valign="top">
+                <vue-markdown-pdq
+                    style="padding-left:4px; border:1px solid;"
+                    class="result-html full-height"
+                    v-on:rendered="allRight"
+                    v-on:toc-rendered="tocAllRight"
+                    :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
+
+                    :watches="['show','html','breaks','linkify','emoji','attrs','collapsible', 'typographer','toc']"
+                    :source="source" :show="show" :html="html" :breaks="breaks" :linkify="linkify"
+                    :emoji="emoji" :typographer="typographer" :toc="toc" 
+                    :collapsible="collapsible" :attrs="attrs" :pandoc="pandoc"
+            />
+            </td>
+        </tr>
+    </table>
+  </div>
+  
+  <script>
+  function main() {
+    Vue.use(VueMarkdownPdq);
+    new Vue({
+      el: '#app',
+      mounted() {
+          this.source = this.$refs.markdata.innerHTML;
+      },
+      data() {
+        return {
+            show:true, html:false, breaks:true, attrs:true, 
+            linkify:false, emoji:true, toc:false, pandoc:true,
+            typographer:true, collapsible:true, source:'', tocVal:'',
+          }
+      },
+      methods: {
+        allRight: function (htmlStr) {
+          console.log("markdown is parsed !");
+          if (!this.toc)
+              this.tocVal = '';
+        },
+        tocAllRight: function (tocHtmlStr) {
+          this.tocVal = tocHtmlStr;
+        }
+      },
+    });
+  }
+</script>
+
+<script ref="markdata" type="text/x-template">
+https://github.com/pdqi/vue-markdown-pdq
 
 ## Typographic replacements
 
@@ -120,14 +206,7 @@ _This is italic text_
 
 ~~Strikethrough~~
 
-
-## Blockquotes
-
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
+Inline `code`
 
 ## Lists
 
@@ -156,11 +235,17 @@ Start numbering with offset:
 57. foo
 1. bar
 
-
 ## Blocks
 
+
+### Blockquotes
+
+
+> Blockquotes can also be nested...
+>> ...by using additional greater-than signs right next to each other...
+> > > ...or with spaces between arrows.
+
 ### Code
-Inline `code`
 
 Indented code
 
@@ -250,11 +335,11 @@ Attributes
 
 ![Logo](logo2.png){.icenter style="width:30px; height:30px;" title="Using attrs to center and lazy-load" loading="lazy"}
 
+## Special
 ### Subscript / Superscript
 
 - 19^th^
 - H~2~O
-
 
 ### \<ins>
 
@@ -264,7 +349,6 @@ Attributes
 ### \<mark>
 
 ==Marked text==
-
 
 ### Footnotes
 
@@ -315,104 +399,9 @@ This is HTML abbreviation example.
 It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
 
 *[HTML]: Hyper Text Markup Language
-</div>
-    <div class="forminput" style="padding:5px">
-      <span><a href="../README.md">Vue-Markdown-PDQ</a> Demo: </span>
-      <span class="checkbox">
-        <label><input v-model="show" type="checkbox">show</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="html" type="checkbox">html</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="breaks" type="checkbox">breaks</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="linkify" type="checkbox">linkify</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="emoji" type="checkbox">emoji</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="typographer" type="checkbox">typographer</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="toc" type="checkbox">toc</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="collapsible" type="checkbox">collapsible</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="attrs" type="checkbox">attrs</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="pandoc" type="checkbox">pandoc</label>
-      </span>
-    </div>
-    <div class="mainwin">
-    <div v-html="tocVal"></div>
-
-    <table width="100%">
-        <tr>
-            <td width="50%" valign="top">
-                <textarea style="width:100%;" rows="300" class="source full-height" v-model="source"></textarea></td>
-            <td width="50%" valign="top">
-                <vue-markdown-pdq style="padding-left:4px"
-                :anchor-attributes="anchorAttrs"
-                
-                class="result-html full-height" :watches="['show','html','breaks','linkify','emoji','attrs','collapsible', 'typographer','toc']"
-          :source="source" :show="show" :html="html" :breaks="breaks" :linkify="linkify"
-          :emoji="emoji" :typographer="typographer" :toc="toc" v-on:rendered="allRight"
-          :collapsible="collapsible" :attrs="attrs" :pandoc="pandoc"
-          v-on:toc-rendered="tocAllRight"
-            />
-            </td>
-        </tr>
-    </table>
-
-  </div>
-  </div>
-  <script>
-    Vue.use(VueMarkdownPdq);
-    new Vue({
-      el: '#app',
-      mounted() {
-          this.source = this.$refs.data.innerHTML;
-      },
-      data() {
-        return {
-            source:'',
-            show: true,
-            html: false,
-            breaks: true,
-            linkify: false,
-            emoji: true,
-            typographer: true,
-            toc: false,
-            collapsible:true,
-            attrs:true,
-            pandoc:true,
-            tocVal:'',
-            anchorAttrs: {
-              target: '_blank',
-              rel: 'noopener noreferrer nofollow'
-            }
-          }
-      },
-      methods: {
-        allRight: function (htmlStr) {
-          console.log("markdown is parsed !");
-          if (!this.toc)
-              this.tocVal = '';
-        },
-        tocAllRight: function (tocHtmlStr) {
-          this.tocVal = tocHtmlStr;
-        }
-      },
-    });
 </script>
 
-
+<script>main();</script>
+</div>
 </body>
-
 </html>

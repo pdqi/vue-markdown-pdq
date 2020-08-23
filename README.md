@@ -10,7 +10,7 @@ An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-m
 
 - [Demo Page](./example/demo.html)
 - [Source](https://jsish.org/fossil/vue-markdown-pdq)
-- [Github](https://github.com/pcmacdon/vue-markdown-pdq)
+- [Github](https://github.com/pdqi/vue-markdown-pdq)
 
 Quick start: `<vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>`
 

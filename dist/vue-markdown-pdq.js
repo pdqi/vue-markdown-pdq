@@ -32298,14 +32298,18 @@ var markdown_it_collapsible_default = /*#__PURE__*/__webpack_require__.n(markdow
 
     this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
       Object.keys(this.anchorAttributes).map(attribute => {
-        if (!tokens[idx].attrIndex) return;
-        let aIndex = tokens[idx].attrIndex(attribute);
+        let n = tokens[idx];
+        if (!n.attrIndex) return;
+        let hidx = n.attrIndex('href');
+        if (hidx < 0 || n.attrs[hidx][1][0] === '#') // Skip internal # links.
+          return;
+        let aIndex = n.attrIndex(attribute);
         let value = this.anchorAttributes[attribute];
 
         if (aIndex < 0) {
-          tokens[idx].attrPush([attribute, value]); // add new attribute
+          n.attrPush([attribute, value]); // add new attribute
         } else {
-          tokens[idx].attrs[aIndex][1] = value;
+          n.attrs[aIndex][1] = value;
         }
       });
       return defaultLinkRenderer(tokens, idx, options, env, self);
