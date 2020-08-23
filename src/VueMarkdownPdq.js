@@ -14,6 +14,7 @@ import tasklists from 'markdown-it-task-lists';
 import span from 'markdown-it-bracketed-spans';
 import pandoc from 'markdown-it-container-pandoc';
 import collapse from 'markdown-it-collapsible';
+import awesome from 'markdown-it-fontawesome';
 
 export default {
   md: new markdownIt(),
@@ -78,6 +79,10 @@ export default {
       default: true,
     },
     attrs: {
+      type: Boolean,
+      default: true,
+    },
+    awesome: {
       type: Boolean,
       default: true,
     },
@@ -187,6 +192,9 @@ export default {
     }
     if (this.emoji) {
       this.md.use(emoji)
+    }
+    if (this.awesome) {
+      this.md.use(awesome)
     }
     if (this.pandoc) {
       this.md.use(pandoc)

@@ -18,7 +18,7 @@ Supported Markdown Syntax:
 
 * [x] automatic table of contents
 * [x] table & class customize
-* [x] *SyntaxHighlighter
+* [x] `*`SyntaxHighlighter
 * [x] definition list
 * [x] strikethrough
 * [x] GFM task list
@@ -28,15 +28,18 @@ Supported Markdown Syntax:
 * [x] subscript
 * [x] footnote
 * [x] insert
-* [x] *katex
+* [x] `*`katex
 * [x] emoji
 * [x] mark
 * [x] collapsible blocks
 * [x] pandoc blocks
+* [x] `*`font-awesome 
 
-`*SyntaxHighlighter` work with [Prism](https://prismjs.com)
+`*SyntaxHighlighter` uses [Prism](https://prismjs.com)
 
 `*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
+
+`*awesome` needs [font-awesome](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
 
 # Installation
 
@@ -77,6 +80,7 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | anchor-attributes | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
 | attr-opts | Object | SEE BELOW | option passed to attrs |
 | attrs | Boolean | `true` | enable attrs/spans support |
+| awesome | Boolean | `true` | enable font-awesome support |
 | breaks | Boolean | `false` | `\n` => `<br>` |
 | collapsible | Boolean | `true` | enable collapsibles |
 | emoji | Boolean | `true` | `:)` => `😃` |
