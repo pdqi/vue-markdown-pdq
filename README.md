@@ -9,6 +9,7 @@ An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-m
 # Source
 
 - [Demo Page](./example/demo.html)
+- [Demo Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html)
 - [Source](https://jsish.org/fossil/vue-markdown-pdq)
 - [Github](https://github.com/pdqi/vue-markdown-pdq)
 
