@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+  <!-- <script src="markdown-it-footnote.js"></script> -->
   <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
@@ -93,8 +94,7 @@
                     :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
                     :sub-opts="{toc:{anchorLinkSpace:false}}"
 
-                    @rendered="rendered"
-                    @toc-rendered="tocRendered" 
+                    :prerender="prerender" @rendered="renderedEv" @toc-rendered="tocRenderedEv" 
 
                     style="padding-left:4px; border:1px solid;"
                 />
@@ -113,11 +113,12 @@
       },
       data() {
         return {
-            disables:['html', 'breaks', 'linkify'],
+            disables:['html', 'breaks', 'linkify'], /*'footnote', */
             show:true, toc:false, source:'',
 
             edits:['emoji', 'html', 'breaks', 'linkify', 'typographer', 
-              'attrs', 'spans', 'collapsible', 'pandoc', 'deflist', 'tasklist'],
+              'attrs', 'spans', 'collapsible', 'pandoc', 'deflist',
+              'tasklist', 'footnote'],
             tocVal:'',
           }
       },
@@ -125,6 +126,7 @@
         vget(name) {
           return (this.disables.indexOf(name)<0);
         },
+        
         vmod(name) {
             let idx = this.disables.indexOf(name);
             if (idx<0)
@@ -133,12 +135,22 @@
                 this.disables.splice(idx,1);
             this.source = this.source; // Refresh
         },
-        rendered: function (htmlStr) {
+        
+        prerender(mdStr, that) {
+          //that.md.use(alerts);
+          console.log("markdown pre");
+          // that.md.use(window.markdownitFootnote); // Example overriding builtin or load additional plugins.
+          // console.log('Features: ', that.features.join(', '));
+          return mdStr;
+        },
+        
+        renderedEv(htmlStr) {
           console.log("markdown rendered");
           if (!this.toc)
             this.tocVal = '';
         },
-        tocRendered: function (tocHtmlStr) {
+        
+        tocRenderedEv(tocHtmlStr) {
           this.tocVal = tocHtmlStr;
         }
       },

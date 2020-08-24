@@ -4,41 +4,45 @@ A powerful and highspeed Markdown Vue 2+ component using
 [markdown-it](https://www.npmjs.com/package/markdown-it) and the following plugins:
 
 
-> [toc&anchor](https://www.npmjs.com/package/markdown-it-toc-and-anchor),
-[superscript](https://www.npmjs.com/package/markdown-it-sup),
-[subscript](https://www.npmjs.com/package/markdown-it-sub),
+>[abbr](https://www.npmjs.com/package/markdown-it-abbr "Abbreviations"),
+[attrs](https://www.npmjs.com/package/markdown-it-attrs),
+[collapsible](https://www.npmjs.com/package/markdown-it-collapsible),
+[deflist](https://www.npmjs.com/package/markdown-it-deflist),
+[emoji](https://www.npmjs.com/package/markdown-it-emoji),
+[fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome),
 [footnote](https://www.npmjs.com/package/markdown-it-footnote),
 [insert](https://www.npmjs.com/package/markdown-it-ins),
-[mark](https://www.npmjs.com/package/markdown-it-mark),
-[definition list](https://www.npmjs.com/package/markdown-it-deflist),
-[task list](https://www.npmjs.com/package/markdown-it-task-lists),
->
-> [emoji](https://www.npmjs.com/package/markdown-it-emoji),
-[font-awesome ](https://www.npmjs.com/package/markdown-it-fontawesome),
-[abbreviation](https://www.npmjs.com/package/markdown-it-abbr),
-[attributes](https://www.npmjs.com/package/markdown-it-attrs),
-[bracketed-spans](https://github.com/mb21/markdown-it-bracketed-spans),
-[collapsible](https://www.npmjs.com/package/markdown-it-collapsible),
-[pandoc](https://www.npmjs.com/package/markdown-it-pandoc),
 [katex](https://www.npmjs.com/package/markdown-it-katexx)
+[mark](https://www.npmjs.com/package/markdown-it-mark),
+[pandoc](https://www.npmjs.com/package/markdown-it-pandoc),
+[spans](https://github.com/mb21/markdown-it-bracketed-spans),
+[sub](https://www.npmjs.com/package/markdown-it-sub),
+[sup](https://www.npmjs.com/package/markdown-it-sup),
+[tasklist](https://www.npmjs.com/package/markdown-it-task-lists),
+[toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor),
 
-- `katex` requires [katex css](https://unpkg.com/katex/dist/katex.min.css).
-- `font-awesome` requires [font-awesome](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
+
+- **katex** requires [katex-css](https://unpkg.com/katex/dist/katex.min.css).
+- **fontawesome** requires [fontawesome-css](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
 - Syntax highlighting is provided by [Prism](https://prismjs.com)
 
 # Download
 
-- [Jsish](https://jsish.org/fossil/vue-markdown-pdq)
-- [Github](https://github.com/pdqi/vue-markdown-pdq)
 
-The **dist** folder contains `vue-markdown-pdq.js`.
+Download from [Github repo](https://github.com/pdqi/vue-markdown-pdq) /
+[PDQI home-page](https://dev.pdqi.com/fossil/vue-markdown-pdq)
+and look in directory **dist**, or from command-line:
+
+> **wget** [https://dev.pdqi.com/lib/vue-markdown-pdq.js](https://dev.pdqi.com/lib/vue-markdown-pdq.js)
+
+*(hint: or click Save-As)* 
 
 
-# Examples
+# Demo
 
-- [Demo](./example/demo.html?mimetype=text/plain): the source.
 - [Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html)
-- [Local](./example/demo.html): if you're using [fossil](https://fossil-scm.org).
+- [Source](./example/demo.html?mimetype=text/plain): source for the demo.
+- [Local](./example/demo.html): run demo from your local [fossil](https://fossil-scm.org).
 
 # Quick Start
 
@@ -68,10 +72,10 @@ This is a [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/s
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
 | anchor-attributes | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
-| disables | Array | `[]` | Features to disable (See **Feature Names** below)  |
+| disables | Array | `[]` | Features/plugins to disable (See **Feature/Plugin Names** below)  |
 | lang-prefix | String | `language-` | CSS language prefix for highlighted fenced blocks |
-| postrender | Function (String) String | `null` | filter function after markdown parse |
-| prerender | Function (String) String | `null` | filter function before markdown parse |
+| postrender | Function (String) String | `null` | filter function after markdown parse (if non-empty) |
+| prerender | Function (String) String, this | `null` | filter function before markdown parse, and/or load plugins (if non-empty)|
 | quotes | String | `“”‘’` | use `“”‘’` for Chinese, `„“‚‘` for German, `«»„“` for Russian |
 | show | Boolean | `true` | enable render to the default slot automatically |
 | source | String | `null` | the markdown source code |
@@ -83,52 +87,59 @@ This is a [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/s
 | toc-last-level | Number | `'toc-first-level' + 1` | use `5` if you want to skip `<h6>` from the TOC |
 | watches | Array | `["source", "show", "toc"]` | HTML refresh automatically when the prop in this array changed |
 
-**Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
+**Note**: Trigger a rerender: `this.source = this.source`
 
-**Note2**: rerender using `this.source = this.source`.
-
-## Feature Names
+## Feature/Plugin Names
 
 Feature names for `disables` and `subOpts` are:
 ```
-    [ "abbr", "attrs", "awesome", "breaks", "collapsible", "deflist",
-      "emoji", "footnote", "html", "ins", "katex", "linkify", "mark", 
-      "pandoc", "spans", "sub", "sup", "tasklist", "typographer", 
-      "xhtmlout"
+    [
+      // Features
+      'breaks', 'html', 'xhtmlout', 'typographer',
+      // Plugins
+      'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
+      'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
+      'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
     ]
 ```
+
+**Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
 
 ## subOpts
 
 Some features accept initialization options in `subOpts`, with the following defaults:
 
-### subOpts['attrs']
-``` js
-{allowedAttributes:['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]}
 ```
-
-### subOpts['katex']
-``` js
-{ "throwOnError": false, "errorColor": " #cc0000" }
-```
-
-### subOpts['toc']
-``` js
-{
-  tocClassName:'table-of-contents', anchorLink:true, anchorLinkSymbol:'#',
-  anchorLinkSpace:true, anchorLinkBefore:true, anchorClassName: 'toc-anchor',
-  anchorLinkSymbolClassName: 'toc-anchor-link'
+subOpts = {
+    katex: { "throwOnError": false, "errorColor": " #cc0000" },
+    attrs:{
+      allowedAttributes:
+        ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]
+    },
+    toc: {
+      tocClassName:'table-of-contents', anchorLink:true, anchorLinkSymbol:'#',
+      anchorLinkSpace:true, anchorLinkBefore:true, anchorClassName: 'toc-anchor',
+      anchorLinkSymbolClassName: 'toc-anchor-link'
+    }
 }
 ```
 
-Refer to each packages docs for others options. 
+Each can individually be overridden.  Refer to each packages docs for option details. 
 
 # Events
 
 | Name | Params[Type] | Describe |
 | ---- | --------- | -------- |
 | rendered | outHtml[String] | dispatch when render finish |
-| toc-rendered | tocHtml[String], markdown[String], list[Array] | dispatch when TOC render finish, never dispatch if the toc[prop] is `false` |
+| toc-rendered | tocHtml[String], markdown[String], list[Array] | dispatch when TOC render finish when toc[prop] is `true` |
+
+
+# Fossil users
+```
+mkdir vue-markdown-pdq && cd vue-markdown-pdq
+fossil clone https://jsish.org/fossil/vue-markdown-pdq vue-markdown-pdq.fossil
+fossil open vue-markdown-pdq.fossil
+```
 
 # Thanks
 

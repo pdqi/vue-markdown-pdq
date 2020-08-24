@@ -24,13 +24,15 @@ export default {
   data() {
     return {
       sourceData: this.source,
-      subs:[
-        "abbr", "attrs", "awesome", "breaks", "collapsible", "deflist",
-        "emoji", "footnote", "html", "ins", "katex", "linkify", "mark", 
-        "pandoc", "spans", "sub", "sup", "tasklist", "typographer", 
-        "xhtmlout"
-     ],
-
+      features:
+        [
+          // Features
+          'breaks', 'html', 'xhtmlout', 'typographer',
+          // Plugins
+          'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
+          'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
+          'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
+        ]
     }
   },
 
@@ -103,13 +105,13 @@ export default {
   render(createElement) {
     
     for (let i of this.disables) {
-      if (this.subs.indexOf(i)<0)
-        console.log('unknown "disables" "'+i+'" not one of: '+this.subs.join(', '));
+      if (i==='toc') console.warn('not valid in disable', i);
+      if (this.features.indexOf(i)<0)
+        console.warn('unknown "disables" "'+i+'" not one of: '+this.features.join(', '));
     }
     for (let i in this.subOpts) {
-      if (i==='toc') continue;
-      if (this.subs.indexOf(i)<0)
-        console.log('unknown "sub-opts" "'+i+'" not one of: '+this.subs.join(', '));
+      if (this.features.indexOf(i)<0)
+        console.warn('unknown "sub-opts" "'+i+'" not one of: '+this.features.join(', '));
     }
     this.md = new markdownIt();
     if (this.disables.indexOf('sub')<0)
@@ -137,7 +139,7 @@ export default {
     if (this.disables.indexOf('emoji')<0) {
       this.md.use(emoji, this.subOpts.emoji)
     }
-    if (this.disables.indexOf('awesome')<0) {
+    if (this.disables.indexOf('fontawesome')<0) {
       this.md.use(awesome, this.subOpts.awesome)
     }
     if (this.disables.indexOf('pandoc')<0) {
@@ -214,11 +216,12 @@ export default {
         }));
     }
 
-    let outHtml = this.show ?
+    let outHtml = this.show &&  this.sourceData != '' ?
       this.md.render(
-        this.prerender(this.sourceData)
+        this.prerender(this.sourceData, this)
       ) : ''
-    outHtml = this.postrender(outHtml);
+    if (outHtml != '')
+        outHtml = this.postrender(outHtml);
 
     this.$emit('rendered', outHtml)
     return createElement(
@@ -239,7 +242,7 @@ export default {
     }
 
     this.$watch('source', () => {
-      this.sourceData = this.prerender(this.source)
+      this.sourceData = this.source
       this.$forceUpdate()
     })
 

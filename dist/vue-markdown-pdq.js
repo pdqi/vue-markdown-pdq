@@ -33204,7 +33204,9 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
   data() {
     return {
       sourceData: this.source,
-      subs: ["abbr", "attrs", "awesome", "breaks", "collapsible", "deflist", "emoji", "footnote", "html", "ins", "katex", "linkify", "mark", "pandoc", "spans", "sub", "sup", "tasklist", "typographer", "xhtmlout"]
+      features: [// Features
+      'breaks', 'html', 'xhtmlout', 'typographer', // Plugins
+      'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist', 'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc']
     };
   },
 
@@ -33281,12 +33283,12 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
 
   render(createElement) {
     for (let i of this.disables) {
-      if (this.subs.indexOf(i) < 0) console.log('unknown "disables" "' + i + '" not one of: ' + this.subs.join(', '));
+      if (i === 'toc') console.warn('not valid in disable', i);
+      if (this.features.indexOf(i) < 0) console.warn('unknown "disables" "' + i + '" not one of: ' + this.features.join(', '));
     }
 
     for (let i in this.subOpts) {
-      if (i === 'toc') continue;
-      if (this.subs.indexOf(i) < 0) console.log('unknown "sub-opts" "' + i + '" not one of: ' + this.subs.join(', '));
+      if (this.features.indexOf(i) < 0) console.warn('unknown "sub-opts" "' + i + '" not one of: ' + this.features.join(', '));
     }
 
     this.md = new markdown_it_default.a();
@@ -33312,7 +33314,7 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
       this.md.use(markdown_it_emoji_default.a, this.subOpts.emoji);
     }
 
-    if (this.disables.indexOf('awesome') < 0) {
+    if (this.disables.indexOf('fontawesome') < 0) {
       this.md.use(markdown_it_fontawesome_default.a, this.subOpts.awesome);
     }
 
@@ -33392,8 +33394,8 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
       }));
     }
 
-    let outHtml = this.show ? this.md.render(this.prerender(this.sourceData)) : '';
-    outHtml = this.postrender(outHtml);
+    let outHtml = this.show && this.sourceData != '' ? this.md.render(this.prerender(this.sourceData, this)) : '';
+    if (outHtml != '') outHtml = this.postrender(outHtml);
     this.$emit('rendered', outHtml);
     return createElement('div', {
       domProps: {
@@ -33412,7 +33414,7 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
     }
 
     this.$watch('source', () => {
-      this.sourceData = this.prerender(this.source);
+      this.sourceData = this.source;
       this.$forceUpdate();
     });
     this.watches.forEach(v => {
