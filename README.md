@@ -4,7 +4,7 @@
 
 A powerful and highspeed Markdown component for Vue.
 
-An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
+Refactored from [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
 
 # Source
 
@@ -14,28 +14,27 @@ An updated / extended version [miaolz123](https://github.com/miaolz123)'s [vue-m
 
 Quick start: `<vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>`
 
-Supported Markdown Syntax:
+Supported Markdown Features:
 
-* [x] automatic table of contents
-* [x] table & class customize
-* [x] `*`SyntaxHighlighter
-* [x] definition list
-* [x] strikethrough
-* [x] GFM task list
-* [x] abbreviation
-* [x] custom attributes (class, id, etc.)
-* [x] superscript
-* [x] subscript
-* [x] footnote
-* [x] insert
-* [x] `*`katex
-* [x] emoji
-* [x] mark
-* [x] collapsible blocks
-* [x] pandoc blocks
-* [x] `*`font-awesome 
+* [x] [markdown-it](https://www.npmjs.com/package/markdown-it)
+* [x] [table of contents](https://www.npmjs.com/package/markdown-it-toc-and-anchor)
+* [x] [definition list](https://www.npmjs.com/package/markdown-it-deflist)
+* [x] [superscript](https://www.npmjs.com/package/markdown-it-sup)
+* [x] [subscript](https://www.npmjs.com/package/markdown-it-sub)
+* [x] [footnote](https://www.npmjs.com/package/markdown-it-footnote)
+* [x] [insert](https://www.npmjs.com/package/markdown-it-ins)
+* [x] [mark](https://www.npmjs.com/package/markdown-it-mark)
+* [x] [task list](https://www.npmjs.com/package/markdown-it-task-lists)
+* [x] [abbreviation](https://www.npmjs.com/package/markdown-it-abbr)
+* [x] [attributes](https://www.npmjs.com/package/markdown-it-attrs)
+* [x] [bracketed-spans](https://github.com/mb21/markdown-it-bracketed-spans)
+* [x] [emoji](https://www.npmjs.com/package/markdown-it-emoji)
+* [x] [collapsible](https://www.npmjs.com/package/markdown-it-collapsible)
+* [x] [pandoc](https://www.npmjs.com/package/markdown-it-pandoc)
+* [x] [`*`font-awesome ](https://www.npmjs.com/package/markdown-it-fontawesome)
+* [x] [`*`katex](https://www.npmjs.com/package/markdown-it-katexx)
 
-`*SyntaxHighlighter` uses [Prism](https://prismjs.com)
+**Syntax Highlight** is provided by [Prism](https://prismjs.com)
 
 `*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
 
@@ -78,45 +77,71 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
 | anchor-attributes | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
-| attr-opts | Object | SEE BELOW | option passed to attrs |
-| attrs | Boolean | `true` | enable attrs/spans support |
-| awesome | Boolean | `true` | enable font-awesome support |
-| breaks | Boolean | `false` | `\n` => `<br>` |
-| collapsible | Boolean | `true` | enable collapsibles |
-| emoji | Boolean | `true` | `:)` => `😃` |
-| html | Boolean | `true` | enable HTML syntax in source |
-| katex | Boolean | `true` | enable latex math support |
-| lang-prefix | String | `language-` | CSS language prefix for fenced blocks |
-| linkify | Boolean | `true` | autoconvert URL-like text to link |
-| pandoc | Boolean | `true` | enable pandoc support |
+| disables | Array | `[]` | Features to disable (See **Feature Names** below)  |
+| lang-prefix | String | `language-` | CSS language prefix for highlighted fenced blocks |
 | postrender | Function (String) String | `null` | filter function after markdown parse |
 | prerender | Function (String) String | `null` | filter function before markdown parse |
 | quotes | String | `“”‘’` | use `“”‘’` for Chinese, `„“‚‘` for German, `«»„“` for Russian |
 | show | Boolean | `true` | enable render to the default slot automatically |
 | source | String | `null` | the markdown source code |
+| sub-opts | Object | `{}` | option to pass to each feature using same names as `disables`. |
 | table-class | String | `table` | customize html class of the `<table>` |
-| task-lists | Boolean | `true` | enable GFM task list |
+| toc | Boolean | `false` | enable automatic table of contents |
+| toc-first-level | Number | `2` | use `2` if you want to skip `<h1>` from the TOC |
+| toc-id | String | `undefined` | the HTML id to render TOC |
+| toc-last-level | Number | `'toc-first-level' + 1` | use `5` if you want to skip `<h6>` from the TOC |
+| watches | Array | `["source", "show", "toc"]` | HTML refresh automatically when the prop in this array changed |
+
+**Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
+**Note2**: force a rerender  with `this.source = this.source`.
+
+## Feature Names
+
+Feature names for `disables` and `subOpts` are:
+```
+    [ "abbr", "attrs", "awesome", "breaks", "collapsible", "deflist",
+      "emoji", "footnote", "html", "ins", "katex", "linkify", "mark", 
+      "pandoc", "spans", "sub", "sup", "tasklist", "typographer", 
+      "xhtmlout"
+    ]
+```
+
+## subOpts
+
+Some features accept initialization options in `subOpts`, with the following defaults:
+
+### subOpts['attrs']
+``` js
+{allowedAttributes:['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]}
+```
+
+### subOpts['katex']
+``` js
+{ "throwOnError": false, "errorColor": " #cc0000" }
+```
+
+### subOpts['toc']
+``` js
+{
+  tocClassName:'table-of-contents', anchorLink:true, anchorLinkSymbol:'#',
+  anchorLinkSpace:true, anchorLinkBefore:true, anchorClassName: 'toc-anchor',
+  anchorLinkSymbolClassName: 'toc-anchor-link'
+}
+```
+
+See docs for each package. 
+
+## tocOpts
+
+| Prop | Type | Default | Describe |
+| ---- | ---- | ------- | ------- |
 | toc-anchor-class | String | `toc-anchor` | customize the anchor class name |
 | toc-anchor-link-before | Boolean | `true` | place anchor link before heading text |
 | toc-anchor-link | Boolean | `true` | enable the automatic anchor link in the headings |
 | toc-anchor-link-class | String | `toc-anchor-link` | customize the anchor link symbol class name |
 | toc-anchor-link-space | Boolean | `true` | enable inserting a space between the anchor link and heading |
 | toc-anchor-link-symbol | String | `#` | customize the anchor link symbol |
-| toc | Boolean | `false` | enable automatic table of contents |
 | toc-class | String | `table` | customize html class of the `<ul>` wrapping the TOC |
-| toc-first-level | Number | `2` | use `2` if you want to skip `<h1>` from the TOC |
-| toc-id | String | `undefined` | the HTML id to render TOC |
-| toc-last-level | Number | `'toc-first-level' + 1` | use `5` if you want to skip `<h6>` from the TOC |
-| typographer | Boolean | `true` | enable language-neutral replacement and quotes beautification |
-| watches | Array | `["source", "show", "toc"]` | HTML refresh automatically when the prop in this array changed |
-| xhtml-out | Boolean | `true` | `<br></br>` => `<br />` |
-
-## attr-opts
-
-Default for **attr-opts** is:
-``` js
-{allowedAttributes:['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]}
-```
 
 # Events
 

@@ -24,6 +24,13 @@ export default {
   data() {
     return {
       sourceData: this.source,
+      subs:[
+        "abbr", "attrs", "awesome", "breaks", "collapsible", "deflist",
+        "emoji", "footnote", "html", "ins", "katex", "linkify", "mark", 
+        "pandoc", "spans", "sub", "sup", "tasklist", "typographer", 
+        "xhtmlout"
+     ],
+
     }
   },
 
@@ -32,65 +39,15 @@ export default {
       type: Array,
       default: () => ['source', 'show', 'toc'],
     },
+    disables: {
+      type: Array,
+      default: () => [],
+    },
     source: {
       type: String,
       default: ``,
     },
-    disable: {
-    },
     show: {
-      type: Boolean,
-      default: true,
-    },
-    highlight: {
-      type: Boolean,
-      default: true
-    },
-    html: {
-      type: Boolean,
-      default: true,
-    },
-    xhtmlOut: {
-      type: Boolean,
-      default: true,
-    },
-    breaks: {
-      type: Boolean,
-      default: false,
-    },
-    linkify: {
-      type: Boolean,
-      default: true,
-    },
-    emoji: {
-      type: Boolean,
-      default: true,
-    },
-    collapsible: {
-      type: Boolean,
-      default: true,
-    },
-    katex: {
-      type: Boolean,
-      default: true,
-    },
-    pandoc: {
-      type: Boolean,
-      default: true,
-    },
-    attrs: {
-      type: Boolean,
-      default: true,
-    },
-    awesome: {
-      type: Boolean,
-      default: true,
-    },
-    attrOpts: {
-      type: Object,
-      default: () => ({ allowedAttributes: ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/] })
-    },
-    typographer: {
       type: Boolean,
       default: true,
     },
@@ -106,10 +63,6 @@ export default {
       type: String,
       default: 'table',
     },
-    taskLists: {
-      type: Boolean,
-      default: true,
-    },
     toc: {
       type: Boolean,
       default: false,
@@ -117,9 +70,9 @@ export default {
     tocId: {
       type: String,
     },
-    tocClass: {
-      type: String,
-      default: 'table-of-contents',
+    subOpts: {
+      type: Object,
+      default: () => ({})
     },
     tocFirstLevel: {
       type: Number,
@@ -127,30 +80,6 @@ export default {
     },
     tocLastLevel: {
       type: Number,
-    },
-    tocAnchorLink: {
-      type: Boolean,
-      default: true,
-    },
-    tocAnchorClass: {
-      type: String,
-      default: 'toc-anchor',
-    },
-    tocAnchorLinkSymbol: {
-      type: String,
-      default: '#',
-    },
-    tocAnchorLinkSpace: {
-      type: Boolean,
-      default: true,
-    },
-    tocAnchorLinkClass: {
-      type: String,
-      default: 'toc-anchor-link',
-    },
-    tocAnchorBefore: {
-      type: Boolean,
-      default: true
     },
     anchorAttributes: {
       type: Object,
@@ -164,10 +93,6 @@ export default {
       type: Function,
       default: (htmlData) => { return htmlData }
     },
-    slugify: {
-      type: Function,
-      default: null
-    },
   },
 
   computed: {
@@ -175,44 +100,62 @@ export default {
       return this.tocLastLevel > this.tocFirstLevel ? this.tocLastLevel : this.tocFirstLevel + 1
     }
   },
-
   render(createElement) {
-    this.md = new markdownIt()
-      .use(subscript)
-      .use(superscript)
-      .use(footnote)
-      .use(deflist)
-      .use(abbreviation)
-      .use(insert)
-      .use(mark)
-      .use(tasklists, { enabled: this.taskLists })
+    for (let i of this.disables) {
+      if (this.subs.indexOf(i)<0)
+        console.log('unknown sub "'+i+'" not one of: '+this.subs.join(', '));
+    }
+    this.md = new markdownIt();
+    if (this.disables.indexOf('sub')<0)
+      this.md.use(subscript);
+    if (this.disables.indexOf('sup')<0)
+      this.md.use(superscript)
+    if (this.disables.indexOf('footnote')<0)
+      this.md.use(footnote)
+    if (this.disables.indexOf('deflist')<0)
+      this.md.use(deflist)
+    if (this.disables.indexOf('abbr')<0)
+      this.md.use(abbreviation)
+    if (this.disables.indexOf('ins')<0)
+      this.md.use(insert)
+    if (this.disables.indexOf('mark')<0)
+      this.md.use(mark)
+    if (this.disables.indexOf('tasklist')<0)
+      this.md.use(tasklists,
+        Object.assign({}, { enabled: true }, this.subOpts.tasklist))
 
-    if (this.katex) {
-      this.md.use(katex, { "throwOnError": false, "errorColor": " #cc0000" })
+    if (this.disables.indexOf('katex')<0) {
+      this.md.use(katex, 
+        Object.assign({}, { "throwOnError": false, "errorColor": " #cc0000" }, this.subOpts.katex))
     }
-    if (this.emoji) {
-      this.md.use(emoji)
+    if (this.disables.indexOf('emoji')<0) {
+      this.md.use(emoji, this.subOpts.emoji)
     }
-    if (this.awesome) {
-      this.md.use(awesome)
+    if (this.disables.indexOf('awesome')<0) {
+      this.md.use(awesome, this.subOpts.awesome)
     }
-    if (this.pandoc) {
-      this.md.use(pandoc)
+    if (this.disables.indexOf('pandoc')<0) {
+      this.md.use(pandoc, this.subOpts.pandoc)
     }
-    if (this.attrs) {
-      this.md.use(attributes, this.attrOpts)
-      this.md.use(span)
+    if (this.disables.indexOf('attrs')<0) {
+      this.md.use(attributes,
+        Object.assign({},
+          { allowedAttributes: ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/] },
+          this.subOpts.attrs));
     }
-    if (this.collapsible) {
-      this.md.use(collapse)
+    if (this.disables.indexOf('spans')<0) {
+        this.md.use(span, this.subOpts.spans)
+    }
+    if (this.disables.indexOf('collapsible')<0) {
+      this.md.use(collapse,  this.subOpts.collapsible)
     }
 
     this.md.set({
-      html: this.html,
-      xhtmlOut: this.xhtmlOut,
-      breaks: this.breaks,
-      linkify: this.linkify,
-      typographer: this.typographer,
+      html: this.disables.indexOf('html')<0,
+      xhtmlOut: this.disables.indexOf('xhtmlout')<0,
+      breaks: this.disables.indexOf('breaks')<0,
+      linkify: this.disables.indexOf('linkify')<0,
+      typographer: this.disables.indexOf('typographer')<0,
       langPrefix: this.langPrefix,
       quotes: this.quotes,
     })
@@ -240,19 +183,20 @@ export default {
       return defaultLinkRenderer(tokens, idx, options, env, self)
     }
 
+
     if (this.toc) {
-      this.md.use(toc, {
-        tocClassName: this.tocClass,
-        tocFirstLevel: this.tocFirstLevel,
-        tocLastLevel: this.tocLastLevelComputed,
-        anchorLink: this.tocAnchorLink,
-        anchorLinkSymbol: this.tocAnchorLinkSymbol,
-        anchorLinkSpace: this.tocAnchorLinkSpace,
-        anchorLinkBefore: this.tocAnchorBefore,
-        anchorClassName: this.tocAnchorClass,
-        anchorLinkSymbolClassName: this.tocAnchorLinkClass,
-        slugify: this.slugify,
-        tocCallback: (tocMarkdown, tocArray, tocHtml) => {
+      this.md.use(toc,
+        Object.assign({}, this.subOpts.toc, {
+            tocClassName: 'table-of-contents',
+            tocFirstLevel: this.tocFirstLevel,
+            tocLastLevel:this.tocLastLevelComputed,
+            anchorLink: true,
+            anchorLinkSymbol: '#',
+            anchorLinkSpace: true,
+            anchorLinkBefore: true,
+            anchorClassName: 'toc-anchor',
+            anchorLinkSymbolClassName: 'toc-anchor-link',
+            tocCallback: (tocMarkdown, tocArray, tocHtml) => {
               if (tocHtml) {
                 if (this.tocId && document.getElementById(this.tocId)) {
                   document.getElementById(this.tocId).innerHTML = tocHtml
@@ -261,7 +205,7 @@ export default {
                 this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray)
               }
             }
-       })
+        }));
     }
 
     let outHtml = this.show ?

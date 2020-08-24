@@ -73,31 +73,10 @@
         <label><input v-model="show" type="checkbox">show</label>
       </span>
       <span class="checkbox">
-        <label><input v-model="html" type="checkbox">html</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="breaks" type="checkbox">breaks</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="linkify" type="checkbox">linkify</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="emoji" type="checkbox">emoji</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="typographer" type="checkbox">typographer</label>
-      </span>
-      <span class="checkbox">
         <label><input v-model="toc" type="checkbox">toc</label>
       </span>
-      <span class="checkbox">
-        <label><input v-model="collapsible" type="checkbox">collapsible</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="attrs" type="checkbox">attrs</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="pandoc" type="checkbox">pandoc</label>
+      <span v-for="(m, index) in edits" key="index" class="checkbox">
+        <label><input :checked="vget(m)" @change="vmod(m)" type="checkbox">{{m}}</label>
       </span>
     </div>
     <div class="mainwin">
@@ -106,21 +85,21 @@
     <table width="100%">
         <tr>
             <td width="50%" valign="top">
-                <textarea style="width:100%;" rows="400" class="source full-height" v-model="source"></textarea></td>
+                <textarea style="width:100%;" rows="400" class="source full-height"
+                    v-model="source"></textarea>
+            </td>
             <td width="50%" valign="top">
                 <vue-markdown-pdq
                     style="padding-left:4px; border:1px solid;"
-                    class="result-html full-height"
+                    class="result-html full-height" :toc="toc" 
                     v-on:rendered="rendered"
-                    v-on:toc-rendered="tocRendered"
+                    v-on:toc-rendered="tocRendered" :disables="disables"
                     :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
-                    :toc-anchor-link-space="false"
+                    :sub-opts="{toc:{anchorLinkSpace:false}}"
 
-                    :watches="['show','html','breaks','linkify','emoji','attrs','collapsible', 'typographer','toc']"
-                    :source="source" :show="show" :html="html" :breaks="breaks" :linkify="linkify"
-                    :emoji="emoji" :typographer="typographer" :toc="toc" 
-                    :collapsible="collapsible" :attrs="attrs" :pandoc="pandoc"
-            />
+                    :watches="['show','toc']"
+                    :source="source" :show="show"
+                />
             </td>
         </tr>
     </table>
@@ -132,20 +111,35 @@
     new Vue({
       el: '#app',
       mounted() {
-          this.source = this.$refs.markdata.innerHTML;
+          this.source = this.getSrc();
       },
       data() {
         return {
-            show:true, html:false, breaks:false, attrs:true, 
-            linkify:false, emoji:true, toc:false, pandoc:true,
-            typographer:true, collapsible:true, source:'', tocVal:'',
+            edits:['emoji', 'html', 'breaks', 'linkify', 'typographer', 
+              'attrs', 'spans', 'collapsible', 'pandoc', 'deflist', 'tasklist'],
+            disables:['html', 'breaks', 'linkify'],
+            show:true, toc:false, source:'', tocVal:'',
           }
       },
       methods: {
+        getSrc() { return  document.getElementById('markdata').innerHTML; },
+        vget(name) {
+          //console.log('vget',name, this.disables.indexOf(name)<0);
+          return (this.disables.indexOf(name)<0);
+        },
+        vmod(name) {
+            let idx = this.disables.indexOf(name);
+            if (idx<0)
+                this.disables.push(name);
+            else
+                this.disables.splice(idx,1);
+            //console.log('vmod ', name, idx);
+            this.source = this.source;
+        },
         rendered: function (htmlStr) {
           console.log("markdown parsed");
           if (!this.toc)
-              this.tocVal = '';
+            this.tocVal = '';
         },
         tocRendered: function (tocHtmlStr) {
           this.tocVal = tocHtmlStr;
@@ -155,9 +149,10 @@
   }
 /********************** END OF CODE **************************************/
 </script>
+</div>
 
 
-<script ref="markdata" type="text/x-template">
+<script id="markdata"  type="text/x-custom-template">
 https://github.com/pdqi/vue-markdown-pdq
 
 ## Typographic
@@ -202,7 +197,7 @@ Full list [here](https://github.com/markdown-it/markdown-it-emoji/blob/master/li
 
 
 # h1 Heading
- h2 Heading by HTML
+<h2>h2 Heading by HTML</h2>
 
 ## h2 Heading
 ### h3 Heading
@@ -415,6 +410,10 @@ Term 2
   ~ Definition 2b
 
 
+## Task lists
+
+* [x] Packed bags
+* [ ] Toothbrush
 
 ## Abbreviations
 
@@ -465,14 +464,6 @@ With a reference later in the document defining the URL and ALT to use:
 
 
 
-## Katex
-
-+++ Katex
-$\sqrt{3x-1}+(1+x)^2$
-+++
-
-
-
 ## Footnotes
 
 Footnote 1 link[^first].
@@ -492,6 +483,5 @@ Duplicated footnote reference[^second].
 </script>
 
 <script>main();</script>
-</div>
 </body>
 </html>
