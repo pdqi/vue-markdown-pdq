@@ -33281,7 +33281,12 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
 
   render(createElement) {
     for (let i of this.disables) {
-      if (this.subs.indexOf(i) < 0) console.log('unknown sub "' + i + '" not one of: ' + this.subs.join(', '));
+      if (this.subs.indexOf(i) < 0) console.log('unknown "disables" "' + i + '" not one of: ' + this.subs.join(', '));
+    }
+
+    for (let i in this.subOpts) {
+      if (i === 'toc') continue;
+      if (this.subs.indexOf(i) < 0) console.log('unknown "sub-opts" "' + i + '" not one of: ' + this.subs.join(', '));
     }
 
     this.md = new markdown_it_default.a();

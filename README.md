@@ -1,77 +1,68 @@
 # vue-markdown-pdq
 
-> This package does not support `vue1.X.X`.
+A powerful and highspeed Markdown Vue 2+ component using
+[markdown-it](https://www.npmjs.com/package/markdown-it) and the following plugins:
 
-A powerful and highspeed Markdown component for Vue.
 
-Refactored from [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
+> [toc&anchor](https://www.npmjs.com/package/markdown-it-toc-and-anchor),
+[superscript](https://www.npmjs.com/package/markdown-it-sup),
+[subscript](https://www.npmjs.com/package/markdown-it-sub),
+[footnote](https://www.npmjs.com/package/markdown-it-footnote),
+[insert](https://www.npmjs.com/package/markdown-it-ins),
+[mark](https://www.npmjs.com/package/markdown-it-mark),
+[definition list](https://www.npmjs.com/package/markdown-it-deflist),
+[task list](https://www.npmjs.com/package/markdown-it-task-lists),
+>
+> [emoji](https://www.npmjs.com/package/markdown-it-emoji),
+[font-awesome ](https://www.npmjs.com/package/markdown-it-fontawesome),
+[abbreviation](https://www.npmjs.com/package/markdown-it-abbr),
+[attributes](https://www.npmjs.com/package/markdown-it-attrs),
+[bracketed-spans](https://github.com/mb21/markdown-it-bracketed-spans),
+[collapsible](https://www.npmjs.com/package/markdown-it-collapsible),
+[pandoc](https://www.npmjs.com/package/markdown-it-pandoc),
+[katex](https://www.npmjs.com/package/markdown-it-katexx)
 
-# Source
+- `katex` requires [katex css](https://unpkg.com/katex/dist/katex.min.css).
+- `font-awesome` requires [font-awesome](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
+- Syntax highlighting is provided by [Prism](https://prismjs.com)
 
-- [Demo Page](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) or [Local](./example/demo.html) for fossil.
-- [Source](https://jsish.org/fossil/vue-markdown-pdq)
+# Download
+
+- [Jsish](https://jsish.org/fossil/vue-markdown-pdq)
 - [Github](https://github.com/pdqi/vue-markdown-pdq)
 
-Quick start: `<vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>`
+The **dist** folder contains `vue-markdown-pdq.js`.
 
-Supported Markdown Features:
 
-* [x] [markdown-it](https://www.npmjs.com/package/markdown-it)
-* [x] [table of contents](https://www.npmjs.com/package/markdown-it-toc-and-anchor)
-* [x] [definition list](https://www.npmjs.com/package/markdown-it-deflist)
-* [x] [superscript](https://www.npmjs.com/package/markdown-it-sup)
-* [x] [subscript](https://www.npmjs.com/package/markdown-it-sub)
-* [x] [footnote](https://www.npmjs.com/package/markdown-it-footnote)
-* [x] [insert](https://www.npmjs.com/package/markdown-it-ins)
-* [x] [mark](https://www.npmjs.com/package/markdown-it-mark)
-* [x] [task list](https://www.npmjs.com/package/markdown-it-task-lists)
-* [x] [abbreviation](https://www.npmjs.com/package/markdown-it-abbr)
-* [x] [attributes](https://www.npmjs.com/package/markdown-it-attrs)
-* [x] [bracketed-spans](https://github.com/mb21/markdown-it-bracketed-spans)
-* [x] [emoji](https://www.npmjs.com/package/markdown-it-emoji)
-* [x] [collapsible](https://www.npmjs.com/package/markdown-it-collapsible)
-* [x] [pandoc](https://www.npmjs.com/package/markdown-it-pandoc)
-* [x] [`*`font-awesome ](https://www.npmjs.com/package/markdown-it-fontawesome)
-* [x] [`*`katex](https://www.npmjs.com/package/markdown-it-katexx)
+# Examples
 
-**Syntax Highlight** is provided by [Prism](https://prismjs.com)
+- [Demo](./example/demo.html?mimetype=text/plain): the source.
+- [Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html)
+- [Local](./example/demo.html): if you're using [fossil](https://fossil-scm.org).
 
-`*katex` needs [katex css](https://unpkg.com/katex/dist/katex.min.css).
+# Quick Start
 
-`*awesome` needs [font-awesome](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
+This is a [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
 
-# Installation
-
-### Browser globals
-
-> The **dist** folder contains `vue-markdown-pdq.js` with the component exported in the `window.VueMarkdownPdq` object.
-
-```html
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
+  <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script>
+</head>
 <body>
-  <vue-markdown-pdq>i am a ~~tast~~ **test**.</vue-markdown-pdq>
-</body>
-<script src="path/to/vue.js"></script>
-<script src="path/to/vue-markdown-pdq.js"></script>
-<script>
+  <div id="app">
+    <vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>
+  </div>
+  <script>
     Vue.use(VueMarkdownPdq);
-    var vm = new Vue({
-        el: "body"
-    });
-</script>
+    new Vue({ el:'#app' });
+  </script>
+</div>
+</body>
+</html>
 ```
-
-# Slots
-
-```html
-<vue-markdown-pdq>this is the default slot</vue-markdown-pdq>
-```
-
-After setting up the middleware in your vue component above, using the embedded markdown is as easy as writing it between the `vue-markdown-pdq` tags.
-
-VueMarkdown has a default slot which is used to write the `markdown` source.
-
-TIP: The default slot only renders **once** at the beginning, and it will overwrite the prop of `source`!
-
 # Props
 
 | Prop | Type | Default | Describe |
@@ -93,7 +84,8 @@ TIP: The default slot only renders **once** at the beginning, and it will overwr
 | watches | Array | `["source", "show", "toc"]` | HTML refresh automatically when the prop in this array changed |
 
 **Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
-**Note2**: force a rerender  with `this.source = this.source`.
+
+**Note2**: rerender using `this.source = this.source`.
 
 ## Feature Names
 
@@ -129,19 +121,7 @@ Some features accept initialization options in `subOpts`, with the following def
 }
 ```
 
-See docs for each package. 
-
-## tocOpts
-
-| Prop | Type | Default | Describe |
-| ---- | ---- | ------- | ------- |
-| toc-anchor-class | String | `toc-anchor` | customize the anchor class name |
-| toc-anchor-link-before | Boolean | `true` | place anchor link before heading text |
-| toc-anchor-link | Boolean | `true` | enable the automatic anchor link in the headings |
-| toc-anchor-link-class | String | `toc-anchor-link` | customize the anchor link symbol class name |
-| toc-anchor-link-space | Boolean | `true` | enable inserting a space between the anchor link and heading |
-| toc-anchor-link-symbol | String | `#` | customize the anchor link symbol |
-| toc-class | String | `table` | customize html class of the `<ul>` wrapping the TOC |
+Refer to each packages docs for others options. 
 
 # Events
 
@@ -175,4 +155,6 @@ See docs for each package.
 
 # License
 
-Copyright (c) 2020 [pcmacdon](https://github.com/pdqi/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
+Copyright (c) 2020 [pdqi](https://github.com/pdqi/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
+
+Refactored from [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 

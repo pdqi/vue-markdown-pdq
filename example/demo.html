@@ -85,20 +85,18 @@
     <table width="100%">
         <tr>
             <td width="50%" valign="top">
-                <textarea style="width:100%;" rows="400" class="source full-height"
-                    v-model="source"></textarea>
+                <textarea v-model="source" rows="400" style="width:100%;"></textarea>
             </td>
             <td width="50%" valign="top">
-                <vue-markdown-pdq
-                    style="padding-left:4px; border:1px solid;"
-                    class="result-html full-height" :toc="toc" 
-                    v-on:rendered="rendered"
-                    v-on:toc-rendered="tocRendered" :disables="disables"
+                <vue-markdown-pdq 
+                    :source="source" :show="show" :toc="toc" :disables="disables"
                     :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
                     :sub-opts="{toc:{anchorLinkSpace:false}}"
 
-                    :watches="['show','toc']"
-                    :source="source" :show="show"
+                    @rendered="rendered"
+                    @toc-rendered="tocRendered" 
+
+                    style="padding-left:4px; border:1px solid;"
                 />
             </td>
         </tr>
@@ -111,20 +109,20 @@
     new Vue({
       el: '#app',
       mounted() {
-          this.source = this.getSrc();
+          this.source =  document.getElementById('markdata').innerHTML;
       },
       data() {
         return {
+            disables:['html', 'breaks', 'linkify'],
+            show:true, toc:false, source:'',
+
             edits:['emoji', 'html', 'breaks', 'linkify', 'typographer', 
               'attrs', 'spans', 'collapsible', 'pandoc', 'deflist', 'tasklist'],
-            disables:['html', 'breaks', 'linkify'],
-            show:true, toc:false, source:'', tocVal:'',
+            tocVal:'',
           }
       },
       methods: {
-        getSrc() { return  document.getElementById('markdata').innerHTML; },
         vget(name) {
-          //console.log('vget',name, this.disables.indexOf(name)<0);
           return (this.disables.indexOf(name)<0);
         },
         vmod(name) {
@@ -133,11 +131,10 @@
                 this.disables.push(name);
             else
                 this.disables.splice(idx,1);
-            //console.log('vmod ', name, idx);
-            this.source = this.source;
+            this.source = this.source; // Refresh
         },
         rendered: function (htmlStr) {
-          console.log("markdown parsed");
+          console.log("markdown rendered");
           if (!this.toc)
             this.tocVal = '';
         },

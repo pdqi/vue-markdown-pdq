@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
+  <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script>
+</head>
+<body>
+  <div id="app">
+    <vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>
+  </div>
+  <script>
+    Vue.use(VueMarkdownPdq);
+    new Vue({ el:'#app' });
+  </script>
+</div>
+</body>
+</html>
