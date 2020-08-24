@@ -24,6 +24,7 @@
       background: lightblue;
       padding:4px;
     }
+    .mytbl table { border-collapse:collapse; }
     .mytbl th{color:#FFF;background-color:#AAA;border:1px solid #888;padding:8px 15px 8px 15px}
     .mytbl td{padding:5px 15px 5px 15px;border:1px solid #888}
     .mytbl tr:nth-child(even){background:#EEE}
@@ -79,6 +80,12 @@
       <span v-for="(m, index) in edits" key="index" class="checkbox">
         <label><input :checked="vget(m)" @change="vmod(m)" type="checkbox">{{m}}</label>
       </span>
+      <span class="checkbox">
+        <label><input v-model="more" type="checkbox">{{moreLabel}}</label>
+      </span>
+      <span v-if="more" v-for="(m, index) in edits2" key="index" class="checkbox">
+        <label><input :checked="vget(m)" @change="vmod(m)" type="checkbox">{{m}}</label>
+      </span>
     </div>
     <div class="mainwin">
     <div v-html="tocVal"></div>
@@ -114,11 +121,11 @@
       data() {
         return {
             disables:['html', 'breaks', 'linkify'], /*'footnote', */
-            show:true, toc:false, source:'',
+            show:true, toc:false, source:'', more:false,
 
-            edits:['emoji', 'html', 'breaks', 'linkify', 'typographer', 
-              'attrs', 'spans', 'collapsible', 'pandoc', 'deflist',
-              'tasklist', 'footnote'],
+            edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans'],
+            edits2:['typographer', 'collapsible', 'pandoc',
+               'deflist', 'tasklist', 'footnote', 'fontawesome'],
             tocVal:'',
           }
       },
@@ -153,6 +160,11 @@
         tocRenderedEv(tocHtmlStr) {
           this.tocVal = tocHtmlStr;
         }
+      },
+      computed: {
+          moreLabel() {
+              return (this.more?"-":"+");
+          },
       },
     });
   }
@@ -360,11 +372,11 @@ and possibly this as well. ;)
 
 ## Links
 
-[vue-markdown](https://github.com/miaolz123/vue-markdown)
+[vue-markdown-pdq](https://github.com/pdqi/vue-markdown-pdq)
 
-[link with title](https://github.com/miaolz123/vue-markdown "VueMarkdown")
+[link with title](https://github.com/pdqi/vue-markdown-pdq "VueMarkdownPdq")
 
-Autoconverted link https://github.com/miaolz123/vue-markdown (enable linkify to see)
+Autoconverted link https://github.com/pdqi/vue-markdown-pdq (enable linkify to see)
 
 
 

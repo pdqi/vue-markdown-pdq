@@ -5,21 +5,21 @@ A powerful and highspeed Markdown Vue 2+ component using
 
 
 >[abbr](https://www.npmjs.com/package/markdown-it-abbr "Abbreviations"),
-[attrs](https://www.npmjs.com/package/markdown-it-attrs),
-[collapsible](https://www.npmjs.com/package/markdown-it-collapsible),
-[deflist](https://www.npmjs.com/package/markdown-it-deflist),
-[emoji](https://www.npmjs.com/package/markdown-it-emoji),
-[fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome),
-[footnote](https://www.npmjs.com/package/markdown-it-footnote),
-[insert](https://www.npmjs.com/package/markdown-it-ins),
-[katex](https://www.npmjs.com/package/markdown-it-katexx)
-[mark](https://www.npmjs.com/package/markdown-it-mark),
-[pandoc](https://www.npmjs.com/package/markdown-it-pandoc),
-[spans](https://github.com/mb21/markdown-it-bracketed-spans),
-[sub](https://www.npmjs.com/package/markdown-it-sub),
-[sup](https://www.npmjs.com/package/markdown-it-sup),
-[tasklist](https://www.npmjs.com/package/markdown-it-task-lists),
-[toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor),
+[attrs](https://www.npmjs.com/package/markdown-it-attrs "Attributes for use with spans"),
+[collapsible](https://www.npmjs.com/package/markdown-it-collapsible "Collapsible using summary/detail"),
+[deflist](https://www.npmjs.com/package/markdown-it-deflist "Definition list"),
+[emoji](https://www.npmjs.com/package/markdown-it-emoji "Emoji support"),
+[fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome "Font Awesome"),
+[footnote](https://www.npmjs.com/package/markdown-it-footnote "Footnotes"),
+[insert](https://www.npmjs.com/package/markdown-it-ins "Insert tag"),
+[katex](https://www.npmjs.com/package/markdown-it-katexx "Katex math library")
+[mark](https://www.npmjs.com/package/markdown-it-mark "Mark tag"),
+[pandoc](https://www.npmjs.com/package/markdown-it-pandoc "Pandoc styled blocks"),
+[spans](https://github.com/mb21/markdown-it-bracketed-spans "Spans for use with attrs"),
+[sub](https://www.npmjs.com/package/markdown-it-sub "Subscripts"),
+[sup](https://www.npmjs.com/package/markdown-it-sup "Superscripts"),
+[tasklist](https://www.npmjs.com/package/markdown-it-task-lists "Task lists"),
+[toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor "Table of contents"),
 
 
 - **katex** requires [katex-css](https://unpkg.com/katex/dist/katex.min.css).
@@ -40,9 +40,9 @@ and look in directory **dist**, or from command-line:
 
 # Demo
 
-- [Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html)
+- [Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html): interactive and editable.
 - [Source](./example/demo.html?mimetype=text/plain): source for the demo.
-- [Local](./example/demo.html): run demo from your local [fossil](https://fossil-scm.org).
+- [Local](./example/demo.html): run demo from a [fossil](https://fossil-scm.org) repo/checkout.
 
 # Quick Start
 
