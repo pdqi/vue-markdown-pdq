@@ -12,14 +12,14 @@ A powerful and highspeed Markdown Vue 2+ component using
 [fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome "Font Awesome"),
 [footnote](https://www.npmjs.com/package/markdown-it-footnote "Footnotes"),
 [insert](https://www.npmjs.com/package/markdown-it-ins "Insert tag"),
-[katex](https://www.npmjs.com/package/markdown-it-katexx "Katex math library")
+[katex](https://www.npmjs.com/package/markdown-it-katexx "Katex math library"),
 [mark](https://www.npmjs.com/package/markdown-it-mark "Mark tag"),
 [pandoc](https://www.npmjs.com/package/markdown-it-pandoc "Pandoc styled blocks"),
 [spans](https://github.com/mb21/markdown-it-bracketed-spans "Spans for use with attrs"),
 [sub](https://www.npmjs.com/package/markdown-it-sub "Subscripts"),
 [sup](https://www.npmjs.com/package/markdown-it-sup "Superscripts"),
 [tasklist](https://www.npmjs.com/package/markdown-it-task-lists "Task lists"),
-[toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor "Table of contents"),
+[toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor "Table of contents")
 
 
 - **katex** requires [katex-css](https://unpkg.com/katex/dist/katex.min.css).
@@ -44,9 +44,9 @@ and look in directory **dist**, or from command-line:
 - [Source](./example/demo.html?mimetype=text/plain): source for the demo.
 - [Local](./example/demo.html): run demo from a [fossil](https://fossil-scm.org) repo/checkout.
 
-# Quick Start
+# Example
 
-This is a [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
+A [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
 
 ```
 <!DOCTYPE html>
@@ -91,7 +91,7 @@ This is a [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/s
 
 ## Feature/Plugin Names
 
-Feature names for `disables` and `subOpts` are:
+Feature names for `disables` and `subOpts`:
 ```
     [
       // Features
@@ -107,7 +107,8 @@ Feature names for `disables` and `subOpts` are:
 
 ## subOpts
 
-Some features accept initialization options in `subOpts`, with the following defaults:
+Some features accept initialization options in `subOpts`.  Following are the defaults;
+each can individually be overridden.
 
 ```
 subOpts = {
@@ -124,7 +125,7 @@ subOpts = {
 }
 ```
 
-Each can individually be overridden.  Refer to each packages docs for option details. 
+Refer to each packages docs for option details. 
 
 # Events
 
@@ -133,6 +134,21 @@ Each can individually be overridden.  Refer to each packages docs for option det
 | rendered | outHtml[String] | dispatch when render finish |
 | toc-rendered | tocHtml[String], markdown[String], list[Array] | dispatch when TOC render finish when toc[prop] is `true` |
 
+# Plugins
+
+Other Plugins can added dynamically:
+
+```
+<script src="markdown-it-icons.js"></script>
+...
+ <vue-markdown-pdq :prerender="prerender" ...
+...
+ methods: {
+   prerender(str, that) {
+      that.md.use(window.markdownitCheckbox);
+      return str;
+   }
+```
 
 # Fossil users
 ```

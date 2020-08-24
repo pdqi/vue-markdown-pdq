@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Vue Markdown PDQ</title>
+  <title>Vue Markdown PDQ Demo</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
   <script src="../dist/vue-markdown-pdq.js"></script>
   <!-- <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script> -->
@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-  <!-- <script src="markdown-it-footnote.js"></script> -->
+  <!-- <script src="markdown-it-checkbox.js"></script> -->
   <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
@@ -70,18 +70,16 @@
     
   <div id="app">
     <div class="forminput" style="padding:5px">
-      <span><a href="../README.md" target="_blank">Vue-Markdown-PDQ</a> Demo: </span>
+      <span><a href="../README.md" target="_blank">Vue-Markdown-PDQ</a></span>
       <span class="checkbox">
         <label><input v-model="show" type="checkbox">show</label>
       </span>
       <span class="checkbox">
         <label><input v-model="toc" type="checkbox">toc</label>
       </span>
-      <span v-for="(m, index) in edits" key="index" class="checkbox">
+      <button @click="more=!more" title="Toggle other options" style="margin-left:8px">{{more?"Back":"More"}}</button>
+      <span v-if="!more" v-for="(m, index) in edits" key="index" class="checkbox">
         <label><input :checked="vget(m)" @change="vmod(m)" type="checkbox">{{m}}</label>
-      </span>
-      <span class="checkbox">
-        <label><input v-model="more" type="checkbox">{{moreLabel}}</label>
       </span>
       <span v-if="more" v-for="(m, index) in edits2" key="index" class="checkbox">
         <label><input :checked="vget(m)" @change="vmod(m)" type="checkbox">{{m}}</label>
@@ -123,9 +121,9 @@
             disables:['html', 'breaks', 'linkify'], /*'footnote', */
             show:true, toc:false, source:'', more:false,
 
-            edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans'],
+            edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans', 'footnote'],
             edits2:['typographer', 'collapsible', 'pandoc',
-               'deflist', 'tasklist', 'footnote', 'fontawesome'],
+               'deflist', 'tasklist', 'fontawesome'],
             tocVal:'',
           }
       },
@@ -146,7 +144,7 @@
         prerender(mdStr, that) {
           //that.md.use(alerts);
           console.log("markdown pre");
-          // that.md.use(window.markdownitFootnote); // Example overriding builtin or load additional plugins.
+          // that.md.use(window.markdownitCheckbox); // Example overriding builtin or load additional plugins.
           // console.log('Features: ', that.features.join(', '));
           return mdStr;
         },
@@ -160,11 +158,6 @@
         tocRenderedEv(tocHtmlStr) {
           this.tocVal = tocHtmlStr;
         }
-      },
-      computed: {
-          moreLabel() {
-              return (this.more?"-":"+");
-          },
       },
     });
   }
