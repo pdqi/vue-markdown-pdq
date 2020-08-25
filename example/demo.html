@@ -11,59 +11,6 @@
   <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
   <!-- <script src="markdown-it-checkbox.js"></script> -->
-  <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
-            "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-            "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    }
-    .red {
-      color: red;
-    }
-    .bg-info {
-      background: lightblue;
-      padding:4px;
-    }
-    .mytbl table { border-collapse:collapse; }
-    .mytbl th{color:#FFF;background-color:#AAA;border:1px solid #888;padding:8px 15px 8px 15px}
-    .mytbl td{padding:5px 15px 5px 15px;border:1px solid #888}
-    .mytbl tr:nth-child(even){background:#EEE}
-    .tcenter table {
-        margin-left:auto;
-        margin-right:auto;
-    }
-    .icenter {
-        margin-left:auto;
-        margin-right:auto;
-        display:block;
-    }
-    
-    label {padding-left:10px; }
-
-    body {
-        position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:lightgray; margin:0;
-        background:white;
-    }
-    .mainwin {
-        margin-top:50px;
-    }
-    :target::before {
-      content: "";
-      display: block;
-      height: 50px; /* fixed header height*/
-      margin: -50px 0 0; /* negative fixed header height */
-    }
-    .forminput {
-        position: fixed;
-        top: 0;
-        z-index: 1071;
-        width:100%;
-        background-color: #c9e4e8;
-        box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
-    }
-    #app { height:100%; width:100%; }
-
-  </style>
 </head>
 
 <body>
@@ -498,4 +445,58 @@ Duplicated footnote reference[^second].
 
 <script>main();</script>
 </body>
+  <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+            "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+            "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    .red {
+      color: red;
+    }
+    .bg-info {
+      background: lightblue;
+      padding:4px;
+    }
+    .mytbl table { border-collapse:collapse; }
+    .mytbl th{color:#FFF;background-color:#AAA;border:1px solid #888;padding:8px 15px 8px 15px}
+    .mytbl td{padding:5px 15px 5px 15px;border:1px solid #888}
+    .mytbl tr:nth-child(even){background:#EEE}
+    .tcenter table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .icenter {
+        margin-left:auto;
+        margin-right:auto;
+        display:block;
+    }
+    
+    label {padding-left:10px; }
+
+    body {
+        position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:lightgray; margin:0;
+        background:white;
+    }
+    .mainwin {
+        margin-top:50px;
+    }
+    :target::before {
+      content: "";
+      display: block;
+      height: 50px; /* fixed header height*/
+      margin: -50px 0 0; /* negative fixed header height */
+    }
+    .forminput {
+        position: fixed;
+        top: 0;
+        z-index: 1071;
+        width:100%;
+        background-color: #c9e4e8;
+        box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
+    }
+    #app { height:100%; width:100%; }
+
+  </style>
+
 </html>

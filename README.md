@@ -35,18 +35,18 @@ and look in directory **dist**, or from command-line:
 
 > **wget** [https://dev.pdqi.com/lib/vue-markdown-pdq.js](https://dev.pdqi.com/lib/vue-markdown-pdq.js)
 
-*(hint: or click Save-As)* 
+*(or click Save-As on above link)* 
 
 
 # Demo
 
-- [Online](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/demo.html): interactive and editable.
+- [Online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html): interactive and editable.
 - [Source](./example/demo.html?mimetype=text/plain): source for the demo.
 - [Local](./example/demo.html): run demo from a [fossil](https://fossil-scm.org) repo/checkout.
 
 # Example
 
-A [simple](https://jsish.org/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
+A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
 
 ```
 <!DOCTYPE html>
@@ -136,10 +136,10 @@ Refer to each packages docs for option details.
 
 # Plugins
 
-Other Plugins can added dynamically:
+Dynamically adding other plugins:
 
 ```
-<script src="markdown-it-icons.js"></script>
+<script src="markdown-it-checkbox.js"></script>
 ...
  <vue-markdown-pdq :prerender="prerender" ...
 ...
@@ -153,7 +153,7 @@ Other Plugins can added dynamically:
 # Fossil users
 ```
 mkdir vue-markdown-pdq && cd vue-markdown-pdq
-fossil clone https://jsish.org/fossil/vue-markdown-pdq vue-markdown-pdq.fossil
+fossil clone https://dev.pdqi.com/fossil/vue-markdown-pdq vue-markdown-pdq.fossil
 fossil open vue-markdown-pdq.fossil
 ```
 
