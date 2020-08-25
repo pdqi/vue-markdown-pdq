@@ -35,12 +35,12 @@
     <div class="mainwin">
     <div v-html="tocVal"></div>
 
-    <table width="100%">
+    <table width="100%" style="table-layout:fixed">
         <tr>
-            <td width="50%" valign="top">
+            <td width="50%" max-width="50%" valign="top">
                 <textarea v-model="source" rows="400" style="width:100%;"></textarea>
             </td>
-            <td width="50%" valign="top">
+            <td width="50%" width="50%"valign="top">
                 <vue-markdown-pdq 
                     :source="source" :show="show" :toc="toc" :disables="disables"
                     :anchor-attrs="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
@@ -68,9 +68,9 @@
             disables:['html', 'breaks', 'linkify'], /*'footnote', */
             show:true, toc:false, source:'', more:false,
 
-            edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans', 'footnote'],
-            edits2:['typographer', 'collapsible', 'pandoc',
-               'deflist', 'tasklist', 'fontawesome'],
+            edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans', 'footnote', 'pandoc'],
+            edits2:['typographer', 'collapsible',
+               'deflist', 'tasklist', 'fontawesome', 'katex'],
             tocVal:'',
           }
       },
@@ -425,6 +425,16 @@ With a reference later in the document defining the URL and ALT to use:
 
 
 
+
+
+## Katex
+
+$$
+f(x) = \int_{-\infty}^\infty\hat f(\xi)\,e^{2 \pi i \xi x}\,d\xi
+$$
+
+---
+
 ## Footnotes
 
 Footnote 1 link[^first].
@@ -496,7 +506,7 @@ Duplicated footnote reference[^second].
         box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
     }
     #app { height:100%; width:100%; }
-
+    
   </style>
 
 </html>

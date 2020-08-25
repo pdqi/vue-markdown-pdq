@@ -33217,7 +33217,7 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
     },
     disables: {
       type: Array,
-      default: () => []
+      default: () => ['breaks', 'html', 'katex']
     },
     source: {
       type: String,

@@ -43,7 +43,7 @@ export default {
     },
     disables: {
       type: Array,
-      default: () => [],
+      default: () => ['breaks', 'html', 'katex'],
     },
     source: {
       type: String,
