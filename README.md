@@ -1,7 +1,7 @@
 # vue-markdown-pdq
 
-A powerful and highspeed Markdown Vue 2+ component using
-[markdown-it](https://www.npmjs.com/package/markdown-it) and the following plugins:
+A [vue](https://vuejs.org "Vue version 2+") markdown parser using
+[markdown-it](https://www.npmjs.com/package/markdown-it) and  these plugins builtin:
 
 
 >[abbr](https://www.npmjs.com/package/markdown-it-abbr "Abbreviations"),
@@ -22,57 +22,51 @@ A powerful and highspeed Markdown Vue 2+ component using
 [toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor "Table of contents")
 
 
-- **katex** requires [katex-css](https://unpkg.com/katex/dist/katex.min.css).
-- **fontawesome** requires [fontawesome-css](https://use.fontawesome.com/releases/v5.5.0/css/all.css)
-- Syntax highlighting is provided by [Prism](https://prismjs.com)
+**Note**: `katex` requires [katex-css](https://unpkg.com/katex/dist/katex.min.css),
+`fontawesome` requires [fontawesome-css](https://use.fontawesome.com/releases/v5.5.0/css/all.css),
+syntax-highlighting is provided by [Prism](https://prismjs.com).
 
 # Download
 
 
-Download from [Github repo](https://github.com/pdqi/vue-markdown-pdq) /
+Fetch from [Github repo](https://github.com/pdqi/vue-markdown-pdq) /
 [PDQI home-page](https://dev.pdqi.com/fossil/vue-markdown-pdq)
-and look in directory **dist**, or from command-line:
+and look in directory **dist**, or use the command-line:
 
-> **wget** [https://dev.pdqi.com/lib/vue-markdown-pdq.js](https://dev.pdqi.com/lib/vue-markdown-pdq.js)
+> **wget** [https://dev.pdqi.com/lib/vue-markdown-pdq.js](https://dev.pdqi.com/lib/vue-markdown-pdq.js "FYI: you can right-click Save-As this link")
 
-*(or click Save-As on above link)* 
 
 
 # Demo
 
-- [Online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html): interactive and editable.
-- [Source](./example/demo.html?mimetype=text/plain): source for the demo.
-- [Local](./example/demo.html): run demo from a [fossil](https://fossil-scm.org) repo/checkout.
+- [Online demo](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) or [view source](./example/demo.html?mimetype=text/plain).
+- [Local](./example/demo.html "Works only from fossil"): **fossil** link to run directly from repo/checkout.
 
 # Example
 
 A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
 
 ```
-<!DOCTYPE html>
-<html>
-<head>
-  <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
-  <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script>
-</head>
-<body>
-  <div id="app">
-    <vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>
-  </div>
-  <script>
-    Vue.use(VueMarkdownPdq);
-    new Vue({ el:'#app' });
-  </script>
-</div>
-</body>
-</html>
+    <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
+    <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script>
+    <body>
+      <div id="app">
+        <vue-markdown-pdq>A ~~Simple~~ **test**.</vue-markdown-pdq>
+      </div>
+      <script>
+        Vue.use(VueMarkdownPdq);
+        new Vue({ el:'#app' });
+      </script>
+    </div>
+    </body>
+    </html>
 ```
 # Props
 
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
 | anchor-attrs | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
-| disables | Array | `['breaks', 'html', 'katex']` | Features/plugins to disable (See **Feature/Plugin Names** below)  |
+| disables | Array | `['breaks', 'html', 'katex']` | Features/plugins to disable (See **Plugins/Features** below)  |
 | lang-prefix | String | `language-` | CSS language prefix for highlighted fenced blocks |
 | postrender | Function (String) String | `null` | filter function after markdown parse (if non-empty) |
 | prerender | Function (String) String, this | `null` | filter function before markdown parse, and/or load plugins (if non-empty)|
@@ -89,44 +83,6 @@ A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple
 
 **Note**: Trigger a rerender: `this.source = this.source`
 
-## Feature/Plugin Names
-
-Feature names for `disables` and `subOpts`:
-```
-    [
-      // Features
-      'breaks', 'html', 'xhtmlout', 'typographer',
-      // Plugins
-      'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
-      'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
-      'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
-    ]
-```
-
-**Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
-
-## subOpts
-
-Some features accept initialization options in `subOpts`.  Following are the defaults;
-each can individually be overridden.
-
-```
-subOpts = {
-    katex: { "throwOnError": false, "errorColor": " #cc0000" },
-    attrs:{
-      allowedAttributes:
-        ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]
-    },
-    toc: {
-      tocClassName:'table-of-contents', anchorLink:true, anchorLinkSymbol:'#',
-      anchorLinkSpace:true, anchorLinkBefore:true, anchorClassName: 'toc-anchor',
-      anchorLinkSymbolClassName: 'toc-anchor-link'
-    }
-}
-```
-
-Refer to each packages docs for option details. 
-
 # Events
 
 | Name | Params[Type] | Describe |
@@ -134,54 +90,83 @@ Refer to each packages docs for option details.
 | rendered | outHtml[String] | dispatch when render finish |
 | toc-rendered | tocHtml[String], markdown[String], list[Array] | dispatch when TOC render finish when toc[prop] is `true` |
 
-# Plugins
 
-Dynamically adding other plugins:
+## Plugins/Features
 
+The plugins/features for `disables` and `subOpts` are:
 ```
-<script src="markdown-it-checkbox.js"></script>
-...
- <vue-markdown-pdq :prerender="prerender" ...
-...
- methods: {
-   prerender(str, that) {
-      that.md.use(window.markdownitCheckbox);
-      return str;
-   }
+    [
+      'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
+      'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
+      'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
+      // FEATURES
+      'breaks', 'html', 'typographer', 'xhtmlout', 
+    ]
 ```
 
-# Fossil users
+**Note**: xhtmlout feature translates: `<br></br>` => `<br />`.
+
+## SubOpts
+
+Most features accept initialization options via `subOpts`; Following are the defaults:
+
 ```
-mkdir vue-markdown-pdq && cd vue-markdown-pdq
-fossil clone https://dev.pdqi.com/fossil/vue-markdown-pdq vue-markdown-pdq.fossil
-fossil open vue-markdown-pdq.fossil
+    subOpts = {
+        katex: { "throwOnError": false, "errorColor": " #cc0000" },
+        attrs:{
+          allowedAttributes:
+            ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]
+        },
+        toc: {
+          tocClassName:'table-of-contents', anchorLink:true, anchorLinkSymbol:'#',
+          anchorLinkSpace:true, anchorLinkBefore:true, anchorClassName: 'toc-anchor',
+          anchorLinkSymbolClassName: 'toc-anchor-link'
+        }
+    }
 ```
 
-# Thanks
+Each can individually be overridden, eg:
 
-- [vue-markdown](https://github.com/miaolz123/vue-markdown)
-- [markdown-it](https://github.com/markdown-it/markdown-it)
-- [miaolz123](https://github.com/miaolz123)
-- [transtone](https://github.com/transtone)
-- [**brandonferens**](https://github.com/brandonferens)
+```
+    :sub-opts="{toc:{anchorLink:false}}"
+```
 
-# Contributions
+causes only **anchorLink** to change.
 
-- [pcmacdon](https://github.com/pcmacdon)
-- [6etacat](https://github.com/6etacat)
-- [miaolz123](https://github.com/miaolz123)
-- [brandonferens](https://github.com/brandonferens)
-- [brianbancroft](https://github.com/brianbancroft)
-- [nikolasp](https://github.com/nikolasp)
-- [mbackonja](https://github.com/mbackonja)
-- [Endi1](https://github.com/Endi1)
-- [printscreen](https://github.com/printscreen)
-- [killix](https://github.com/killix)
-- [LeFnord](https://github.com/lefnord)
-- [FlorianWendelborn](https://github.com/FlorianWendelborn)
+# Extending
+
+To dynamically add or override plugins:
+
+```
+    <script src="markdown-it-checkbox.js"></script>
+    ...
+     <vue-markdown-pdq :prerender="prerender" ...
+    ...
+     methods: {
+       prerender(str, that) {
+          that.md.use(window.markdownitCheckbox);
+          return str;
+       }
+    ...
+```
+
+# Fossil
+[Fossil](https://fossil-scm.org) clone the repo with:
+```
+    mkdir vue-markdown-pdq && cd vue-markdown-pdq
+    fossil clone https://dev.pdqi.com/fossil/vue-markdown-pdq vue-markdown-pdq.fossil
+    fossil open vue-markdown-pdq.fossil
+```
+
+
+# Credits
+
+> [pdqi](https://github.com/pdqi)
+[pcmacdon](https://github.com/pcmacdon)
+[markdown-it](https://github.com/markdown-it/markdown-it)
+[vue-markdown](https://github.com/miaolz123/vue-markdown)
 
 # License
 
 Copyright (c) 2020 [pdqi](https://github.com/pdqi/vue-markdown-pdq) by [MIT](https://opensource.org/licenses/MIT)
 
-Refactored from [miaolz123](https://github.com/miaolz123)'s [vue-markdown](https://github.com/miaolz123/vue-markdown) which seems to have gone dormant. 
