@@ -33257,7 +33257,7 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
     tocLastLevel: {
       type: Number
     },
-    anchorAttributes: {
+    anchorAttrs: {
       type: Object,
       default: () => ({})
     },
@@ -33353,14 +33353,14 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
     };
 
     this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      Object.keys(this.anchorAttributes).map(attribute => {
+      Object.keys(this.anchorAttrs).map(attribute => {
         let n = tokens[idx];
         if (!n.attrIndex) return;
         let hidx = n.attrIndex('href');
         if (hidx < 0 || n.attrs[hidx][1][0] === '#') // Skip internal # links.
           return;
         let aIndex = n.attrIndex(attribute);
-        let value = this.anchorAttributes[attribute];
+        let value = this.anchorAttrs[attribute];
 
         if (aIndex < 0) {
           n.attrPush([attribute, value]); // add new attribute
@@ -33372,7 +33372,8 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
     };
 
     if (this.toc) {
-      this.md.use(dist_default.a, Object.assign({}, this.subOpts.toc, {
+      let ss;
+      this.md.use(dist_default.a, ss = Object.assign({}, {
         tocClassName: 'table-of-contents',
         tocFirstLevel: this.tocFirstLevel,
         tocLastLevel: this.tocLastLevelComputed,
@@ -33391,7 +33392,7 @@ var markdown_it_fontawesome_default = /*#__PURE__*/__webpack_require__.n(markdow
             this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray);
           }
         }
-      }));
+      }, this.subOpts.toc));
     }
 
     let outHtml = this.show && this.sourceData != '' ? this.md.render(this.prerender(this.sourceData, this)) : '';

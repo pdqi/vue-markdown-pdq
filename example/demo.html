@@ -43,7 +43,7 @@
             <td width="50%" valign="top">
                 <vue-markdown-pdq 
                     :source="source" :show="show" :toc="toc" :disables="disables"
-                    :anchor-attributes="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
+                    :anchor-attrs="{target: '_blank', rel: 'noopener noreferrer nofollow'}"
                     :sub-opts="{toc:{anchorLinkSpace:false}}"
 
                     :prerender="prerender" @rendered="renderedEv" @toc-rendered="tocRenderedEv" 

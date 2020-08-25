@@ -71,7 +71,7 @@ A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple
 
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
-| anchor-attributes | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
+| anchor-attrs | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
 | disables | Array | `[]` | Features/plugins to disable (See **Feature/Plugin Names** below)  |
 | lang-prefix | String | `language-` | CSS language prefix for highlighted fenced blocks |
 | postrender | Function (String) String | `null` | filter function after markdown parse (if non-empty) |

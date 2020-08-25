@@ -83,7 +83,7 @@ export default {
     tocLastLevel: {
       type: Number,
     },
-    anchorAttributes: {
+    anchorAttrs: {
       type: Object,
       default: () => ({})
     },
@@ -173,7 +173,7 @@ export default {
         return self.renderToken(tokens, idx, options)
       }
     this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      Object.keys(this.anchorAttributes).map((attribute) => {
+      Object.keys(this.anchorAttrs).map((attribute) => {
         let n = tokens[idx];
         if (!n.attrIndex)
           return;
@@ -181,7 +181,7 @@ export default {
         if (hidx<0 || n.attrs[hidx][1][0] === '#') // Skip internal # links.
             return;
         let aIndex = n.attrIndex(attribute)
-        let value = this.anchorAttributes[attribute]
+        let value = this.anchorAttrs[attribute]
         if (aIndex < 0) {
           n.attrPush([attribute, value]) // add new attribute
         } else {
@@ -193,8 +193,9 @@ export default {
 
 
     if (this.toc) {
+      let ss;
       this.md.use(toc,
-        Object.assign({}, this.subOpts.toc, {
+        ss = Object.assign({}, {
             tocClassName: 'table-of-contents',
             tocFirstLevel: this.tocFirstLevel,
             tocLastLevel:this.tocLastLevelComputed,
@@ -213,7 +214,7 @@ export default {
                 this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray)
               }
             }
-        }));
+        }, this.subOpts.toc ));
     }
 
     let outHtml = this.show &&  this.sourceData != '' ?
