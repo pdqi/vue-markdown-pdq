@@ -12,7 +12,6 @@ A [vue](https://vuejs.org "Vue version 2+") markdown parser using
 [fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome "Font Awesome"),
 [footnote](https://www.npmjs.com/package/markdown-it-footnote "Footnotes"),
 [insert](https://www.npmjs.com/package/markdown-it-ins "Insert tag"),
-[katex](https://www.npmjs.com/package/markdown-it-katexx "Katex math library"),
 [mark](https://www.npmjs.com/package/markdown-it-mark "Mark tag"),
 [pandoc](https://www.npmjs.com/package/markdown-it-pandoc "Pandoc styled blocks"),
 [spans](https://github.com/mb21/markdown-it-bracketed-spans "Spans for use with attrs"),
@@ -22,7 +21,7 @@ A [vue](https://vuejs.org "Vue version 2+") markdown parser using
 [toc](https://www.npmjs.com/package/markdown-it-toc-and-anchor "Table of contents")
 
 
-**Note**: `katex` requires [katex-css](https://unpkg.com/katex/dist/katex.min.css),
+**Note**:
 `fontawesome` requires [fontawesome-css](https://use.fontawesome.com/releases/v5.5.0/css/all.css),
 syntax-highlighting is provided by [Prism](https://prismjs.com).
 
@@ -67,7 +66,7 @@ See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/s
 | Prop | Type | Default | Describe |
 | ---- | ---- | ------- | ------- |
 | anchor-attrs | Object | `{}` | attributes for non-# `a` tags: `target: '_blank'` or `rel: 'nofollow'` |
-| disables | Array | `['breaks', 'html', 'katex']` | Features/plugins to disable (See **Plugins/Features** below)  |
+| disables | Array | `['breaks', 'html']` | Features/plugins to disable (See **Plugins/Features** below)  |
 | lang-prefix | String | `language-` | CSS language prefix for highlighted fenced blocks |
 | postrender | Function (String) String | `null` | filter function after markdown parse (if non-empty) |
 | prerender | Function (String) String, this | `null` | filter function before markdown parse, and/or load plugins (if non-empty)|
@@ -98,7 +97,7 @@ The plugins/features for `disables` and `subOpts` are:
 ```
     [
       'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
-      'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
+      'emoji', 'footnote', 'ins', 'linkify', 'mark', 
       'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
       // FEATURES
       'breaks', 'html', 'typographer', 'xhtmlout', 
@@ -113,7 +112,6 @@ Most features accept initialization options via `subOpts`; Following are the def
 
 ```
     subOpts = {
-        katex: { "throwOnError": false, "errorColor": " #cc0000" },
         attrs:{
           allowedAttributes:
             ['id', 'class', 'style', 'name', 'width', 'height', 'alt', 'loading', 'title', /^data-.*$/]

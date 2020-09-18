@@ -2,13 +2,12 @@
 <html>
 
 <head>
-  <title>Vue Markdown PDQ Demo</title>
+  <title>Vue-Markdown-PDQ Demo</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
   <script src="../dist/vue-markdown-pdq.js"></script>
   <!-- <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/katex@0.6.0/dist/katex.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
   <!-- <script src="markdown-it-checkbox.js"></script> -->
 </head>
@@ -70,7 +69,7 @@
 
             edits:['emoji', 'html', 'breaks', 'linkify', 'attrs', 'spans', 'footnote', 'pandoc'],
             edits2:['typographer', 'collapsible',
-               'deflist', 'tasklist', 'fontawesome', 'katex'],
+               'deflist', 'tasklist', 'fontawesome'],
             tocVal:'',
           }
       },
@@ -425,13 +424,6 @@ With a reference later in the document defining the URL and ALT to use:
 
 
 
-
-
-## Katex
-
-$$
-f(x) = \int_{-\infty}^\infty\hat f(\xi)\,e^{2 \pi i \xi x}\,d\xi
-$$
 
 ---
 

@@ -9,7 +9,6 @@ import attributes from 'markdown-it-attrs';
 import insert from 'markdown-it-ins';
 import mark from 'markdown-it-mark';
 import toc from 'markdown-it-toc-and-anchor';
-import katex from 'markdown-it-katexx';
 import tasklists from 'markdown-it-task-lists';
 import span from 'markdown-it-bracketed-spans';
 import pandoc from 'markdown-it-container-pandoc';
@@ -30,7 +29,7 @@ export default {
           'breaks', 'html', 'xhtmlout', 'typographer',
           // Plugins
           'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
-          'emoji', 'footnote', 'ins', 'katex', 'linkify', 'mark', 
+          'emoji', 'footnote', 'ins', 'linkify', 'mark', 
           'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
         ]
     }
@@ -43,7 +42,7 @@ export default {
     },
     disables: {
       type: Array,
-      default: () => ['breaks', 'html', 'katex'],
+      default: () => ['breaks', 'html'],
     },
     source: {
       type: String,
@@ -132,10 +131,6 @@ export default {
       this.md.use(tasklists,
         Object.assign({}, { enabled: true }, this.subOpts.tasklist))
 
-    if (this.disables.indexOf('katex')<0) {
-      this.md.use(katex, 
-        Object.assign({}, { "throwOnError": false, "errorColor": " #cc0000" }, this.subOpts.katex))
-    }
     if (this.disables.indexOf('emoji')<0) {
       this.md.use(emoji, this.subOpts.emoji)
     }
