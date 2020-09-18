@@ -39,12 +39,11 @@ and look in directory **dist**, or use the command-line:
 
 # Demo
 
-- [Online demo](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) or [view source](./example/demo.html?mimetype=text/plain).
-- [Local](./example/demo.html "Works only from fossil"): **fossil** link to run directly from repo/checkout.
+> [Online demo](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) /
+[repo](./example/demo.html "Works only via fossil"),
+or [view source](./example/demo.html?mimetype=text/plain).
 
-# Example
-
-A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html) working example:
+# Quick Start
 
 ```
     <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
@@ -61,6 +60,8 @@ A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple
     </body>
     </html>
 ```
+See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html).
+
 # Props
 
 | Prop | Type | Default | Describe |
@@ -81,7 +82,7 @@ A [simple](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple
 | toc-last-level | Number | `'toc-first-level' + 1` | use `5` if you want to skip `<h6>` from the TOC |
 | watches | Array | `["source", "show", "toc"]` | HTML refresh automatically when the prop in this array changed |
 
-**Note**: Trigger a rerender: `this.source = this.source`
+**Note**: Cause a rerender with `this.source = this.source`
 
 # Events
 

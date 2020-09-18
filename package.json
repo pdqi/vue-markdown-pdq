@@ -6,12 +6,13 @@
   "files": [
     "dist/vue-markdown-pdq.js",
     "dist/vue-markdown-pdq.common.js",
+    "dist/vue-markdown-pdq.min.js",
+    "dist/vue-markdown-pdq.common.min.js",
     "src"
   ],
   "scripts": {
-    "start": "webpack --config webpack.config.js",
-    "build": "webpack --config webpack.common.js",
-    "publish": "sh ./publish.sh"
+    "start": "webpack --config webpack.config.js; webpack --config webpack.config.min.js",
+    "build": "webpack --config webpack.common.js; webpack --config webpack.common.min.js"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
-    "markdown-it-toc-and-anchor": "^4.2.0"
+    "markdown-it-toc-and-anchor": "^4.2.0",
+    "vue-highchart": "0.0.2"
   }
 }
