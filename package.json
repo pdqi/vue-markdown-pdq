@@ -36,7 +36,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "highlight.js": "^10.1.2",
-    "markdown-it": "^11.0.0",
+    "markdown-it": "^10.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-alerts": "^0.1.0",
     "markdown-it-attrs": "^3.0.3",
@@ -54,7 +54,6 @@
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
     "markdown-it-task-lists": "^2.1.1",
-    "markdown-it-toc-and-anchor": "^4.2.0",
-    "vue-highchart": "0.0.2"
+    "markdown-it-toc-and-anchor": "^4.2.0"
   }
 }

@@ -9,7 +9,6 @@ A [vue](https://vuejs.org "Vue version 2+") markdown parser using
 [collapsible](https://www.npmjs.com/package/markdown-it-collapsible "Collapsible using summary/detail"),
 [deflist](https://www.npmjs.com/package/markdown-it-deflist "Definition list"),
 [emoji](https://www.npmjs.com/package/markdown-it-emoji "Emoji support"),
-[fontawesome ](https://www.npmjs.com/package/markdown-it-fontawesome "Font Awesome"),
 [footnote](https://www.npmjs.com/package/markdown-it-footnote "Footnotes"),
 [insert](https://www.npmjs.com/package/markdown-it-ins "Insert tag"),
 [mark](https://www.npmjs.com/package/markdown-it-mark "Mark tag"),
@@ -22,7 +21,6 @@ A [vue](https://vuejs.org "Vue version 2+") markdown parser using
 
 
 **Note**:
-`fontawesome` requires [fontawesome-css](https://use.fontawesome.com/releases/v5.5.0/css/all.css),
 syntax-highlighting is provided by [Prism](https://prismjs.com).
 
 # Download
@@ -96,7 +94,7 @@ See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/s
 The plugins/features for `disables` and `subOpts` are:
 ```
     [
-      'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
+      'abbr', 'attrs', 'collapsible', 'deflist',
       'emoji', 'footnote', 'ins', 'linkify', 'mark', 
       'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
       // FEATURES

@@ -13,7 +13,6 @@ import tasklists from 'markdown-it-task-lists';
 import span from 'markdown-it-bracketed-spans';
 import pandoc from 'markdown-it-container-pandoc';
 import collapse from 'markdown-it-collapsible';
-import awesome from 'markdown-it-fontawesome';
 
 export default {
   md: new markdownIt(),
@@ -28,7 +27,7 @@ export default {
           // Features
           'breaks', 'html', 'xhtmlout', 'typographer',
           // Plugins
-          'abbr', 'attrs', 'fontawesome', 'collapsible', 'deflist',
+          'abbr', 'attrs', 'collapsible', 'deflist',
           'emoji', 'footnote', 'ins', 'linkify', 'mark', 
           'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
         ]
@@ -133,9 +132,6 @@ export default {
 
     if (this.disables.indexOf('emoji')<0) {
       this.md.use(emoji, this.subOpts.emoji)
-    }
-    if (this.disables.indexOf('fontawesome')<0) {
-      this.md.use(awesome, this.subOpts.awesome)
     }
     if (this.disables.indexOf('pandoc')<0) {
       this.md.use(pandoc, this.subOpts.pandoc)
