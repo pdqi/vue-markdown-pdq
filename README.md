@@ -59,6 +59,58 @@ or [view source](./example/demo.html?mimetype=text/plain).
 ```
 See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html).
 
+# Markdown Cheatsheet
+
+    # Heading (or ##, ### ...)
+    [link](url "tooltip")
+    ![image](url "tooltip")
+    *italic* or _italic_
+    **bold** or __bold__
+    ***bold-italic*** or ___bold-italic___
+    `inline-code`
+    ~~strikethrough~~
+    ++ underlined ++
+    == highlighted ==
+    :emoji:  or :-)
+    :superscipt^n^, or subscript~n
+
+    1) ol-list (or 1.)
+    * ul-list (or + or -)
+    * [x] task-list
+
+    ``` js
+    code-block (or indent 4+ spaces)
+    ```
+    ::: {.class style=""}
+    pandoc with optional attrs
+    :::
+
+    +++ title {.class}
+    collapsible with optional attrs
+    +++
+
+    |table|
+    |:---:|
+    |row  |
+
+    term
+    : definition
+
+    mentioned [^footnote]
+    [^footnote]: defined
+
+    [span]{.class style=""}
+    *[HTML]: Tooltip for HTML throughout doc
+
+    ![alt-text][id]
+    [id]: logo.png  "tooltip"
+
+
+
+List of available emojis: [emojis.txt](emojis.txt).
+
+See [Markdown Commonspec](https://spec.commonmark.org/0.29/) for more detail.
+
 # Props
 
 | Prop | Type | Default | Describe |
@@ -146,60 +198,6 @@ To dynamically add or override plugins:
        }
     ...
 ```
-
-# Markdown Cheatsheet
-
-    # Heading (or ##, ### ...)
-    [link](url "tooltip")
-    ![image](url "tooltip")
-    *italic* or _italic_
-    **bold** or __bold__
-    ***bold-italic*** or ___bold-italic___
-    `inline-code`
-    ~~strikethrough~~
-    ++ underlined ++
-    == highlighted ==
-    :emoji:  or :-)
-    :superscipt^n^, or subscript~n
-
-    1) ol-list (or 1.)
-    * ul-list (or + or -)
-    * [x] task-list
-
-
-    ``` js
-    code-block (or indent 4+ spaces)
-    ```
-
-    ::: {.class style=""}
-    pandoc with optional attrs
-    :::
-
-    +++ title {.class}
-    collapsible with optional attrs
-    +++
-
-    |table|
-    |-----|
-    |data |
-
-    term
-    : definition
-
-    mentioned [^footnote]
-    [^footnote]: defined
-
-    [span]{.class style=""}
-    *[HTML]: Tooltip for HTML throughout doc
-
-    ![alt-text][id]
-    [id]: logo.png  "tooltip"
-
-
-
-List of available emojis :[emojis.txt](emojis.txt).
-
-See [Markdown Commonspec](https://spec.commonmark.org/0.29/) for mor detail.
 
 
 # Fossil
