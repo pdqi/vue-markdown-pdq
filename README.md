@@ -37,8 +37,8 @@ and look in directory **dist**, or use the command-line:
 # Demo
 
 > [Online demo](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) /
-[repo](./example/demo.html "Works only via fossil"),
-or [view source](./example/demo.html?mimetype=text/plain).
+[repo](./example/demo.html "Works only via fossil"):
+[view demo source](./example/demo.html?mimetype=text/plain).
 
 # Quick Start
 
