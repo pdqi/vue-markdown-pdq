@@ -57,7 +57,7 @@ or [view source](./example/demo.html?mimetype=text/plain).
     </body>
     </html>
 ```
-See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html).
+See [quick-start online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/simple.html).
 
 # Markdown Cheatsheet
 
@@ -69,18 +69,19 @@ See it [online](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/s
     ***bold-italic*** or ___bold-italic___
     `inline-code`
     ~~strikethrough~~
-    ++ underlined ++
-    == highlighted ==
+    ++underlined++
+    ==highlighted==
     :emoji:  or :-)
-    :superscipt^n^, or subscript~n
+    :superscipt^n^, or subscript~n~
 
     1) ol-list (or 1.)
     * ul-list (or + or -)
     * [x] task-list
 
     ``` js
-    code-block (or indent 4+ spaces)
+    code-block (or indent 4+ spaces), language optional
     ```
+
     ::: {.class style=""}
     pandoc with optional attrs
     :::
