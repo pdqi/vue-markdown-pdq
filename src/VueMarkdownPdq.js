@@ -13,6 +13,7 @@ import tasklists from 'markdown-it-task-lists';
 import span from 'markdown-it-bracketed-spans';
 import pandoc from 'markdown-it-container-pandoc';
 import collapse from 'markdown-it-collapsible';
+import comments from 'markdown-it-inline-comments';
 
 export default {
   md: new markdownIt(),
@@ -27,7 +28,7 @@ export default {
           // Features
           'breaks', 'html', 'xhtmlout', 'typographer',
           // Plugins
-          'abbr', 'attrs', 'collapsible', 'deflist',
+          'abbr', 'attrs', 'collapsible', 'comments', 'deflist',
           'emoji', 'footnote', 'ins', 'linkify', 'mark', 
           'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc',
         ]
@@ -126,6 +127,8 @@ export default {
       this.md.use(insert)
     if (this.disables.indexOf('mark')<0)
       this.md.use(mark)
+    if (this.disables.indexOf('comments')<0)
+      this.md.use(comments)
     if (this.disables.indexOf('tasklist')<0)
       this.md.use(tasklists,
         Object.assign({}, { enabled: true }, this.subOpts.tasklist))

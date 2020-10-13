@@ -7,6 +7,7 @@ A [vue](https://vuejs.org "Vue version 2+") markdown parser using
 >[abbr](https://www.npmjs.com/package/markdown-it-abbr "Abbreviations"),
 [attrs](https://www.npmjs.com/package/markdown-it-attrs "Attributes for use with spans"),
 [collapsible](https://www.npmjs.com/package/markdown-it-collapsible "Collapsible using summary/detail"),
+[comment](https://www.npmjs.com/package/markdown-it-inline-comments "Comment support"),
 [deflist](https://www.npmjs.com/package/markdown-it-deflist "Definition list"),
 [emoji](https://www.npmjs.com/package/markdown-it-emoji "Emoji support"),
 [footnote](https://www.npmjs.com/package/markdown-it-footnote "Footnotes"),
@@ -37,7 +38,7 @@ and look in directory **dist**, or use the command-line:
 # Demo
 
 > [Online demo](https://dev.pdqi.com/fossil/vue-markdown-pdq/doc/ckout/example/demo.html) /
-[repo](./example/demo.html "Works only via fossil"):
+[repo](./example/demo.html "Works via a fossil repo only, but not github.com"):
 [view demo source](./example/demo.html?mimetype=text/plain).
 
 # Quick Start
