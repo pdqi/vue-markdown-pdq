@@ -14709,6 +14709,12 @@ var markdown_it_inline_comments = __webpack_require__(28);
 var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(markdown_it_inline_comments);
 
 // CONCATENATED MODULE: ./src/VueMarkdownPdq.js
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 
@@ -14728,8 +14734,7 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
 /* harmony default export */ var VueMarkdownPdq = ({
   md: new markdown_it_default.a(),
   template: '<div><slot></slot></div>',
-
-  data() {
+  data: function data() {
     return {
       sourceData: this.source,
       features: [// Features
@@ -14737,85 +14742,102 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
       'abbr', 'attrs', 'collapsible', 'comments', 'deflist', 'emoji', 'footnote', 'ins', 'linkify', 'mark', 'pandoc', 'spans', 'sub', 'sup', 'tasklist', 'toc']
     };
   },
-
   props: {
     watches: {
       type: Array,
-      default: () => ['source', 'show', 'toc']
+      "default": function _default() {
+        return ['source', 'show', 'toc'];
+      }
     },
     disables: {
       type: Array,
-      default: () => ['breaks', 'html']
+      "default": function _default() {
+        return ['breaks', 'html'];
+      }
     },
     source: {
       type: String,
-      default: ``
+      "default": ""
     },
     show: {
       type: Boolean,
-      default: true
+      "default": true
     },
     langPrefix: {
       type: String,
-      default: 'language-'
+      "default": 'language-'
     },
     quotes: {
       type: String,
-      default: '“”‘’'
+      "default": '“”‘’'
     },
     tableClass: {
       type: String,
-      default: 'table'
+      "default": 'table'
     },
     toc: {
       type: Boolean,
-      default: false
+      "default": false
     },
     tocId: {
       type: String
     },
     subOpts: {
       type: Object,
-      default: () => ({})
+      "default": function _default() {
+        return {};
+      }
     },
     tocFirstLevel: {
       type: Number,
-      default: 2
+      "default": 2
     },
     tocLastLevel: {
       type: Number
     },
     anchorAttrs: {
       type: Object,
-      default: () => ({})
+      "default": function _default() {
+        return {};
+      }
     },
     prerender: {
       type: Function,
-      default: sourceData => {
+      "default": function _default(sourceData) {
         return sourceData;
       }
     },
     postrender: {
       type: Function,
-      default: htmlData => {
+      "default": function _default(htmlData) {
         return htmlData;
       }
     }
   },
   computed: {
-    tocLastLevelComputed() {
+    tocLastLevelComputed: function tocLastLevelComputed() {
       return this.tocLastLevel > this.tocFirstLevel ? this.tocLastLevel : this.tocFirstLevel + 1;
     }
-
   },
+  render: function render(createElement) {
+    var _this = this;
 
-  render(createElement) {
-    for (let i of this.disables) {
-      if (i === 'toc') console.warn('not valid in disable', i);
-      if (this.features.indexOf(i) < 0) console.warn('unknown "disables" "' + i + '" not one of: ' + this.features.join(', '));
+    var _iterator = _createForOfIteratorHelper(this.disables),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var _i = _step.value;
+        if (_i === 'toc') console.warn('not valid in disable', _i);
+        if (this.features.indexOf(_i) < 0) console.warn('unknown "disables" "' + _i + '" not one of: ' + this.features.join(', '));
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
 
-    for (let i in this.subOpts) {
+    for (var i in this.subOpts) {
       if (this.features.indexOf(i) < 0) console.warn('unknown "sub-opts" "' + i + '" not one of: ' + this.features.join(', '));
     }
 
@@ -14864,21 +14886,23 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
       quotes: this.quotes
     });
 
-    this.md.renderer.rules.table_open = () => `<table class="${this.tableClass}">\n`;
+    this.md.renderer.rules.table_open = function () {
+      return "<table class=\"".concat(_this.tableClass, "\">\n");
+    };
 
-    let defaultLinkRenderer = this.md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
+    var defaultLinkRenderer = this.md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
       return self.renderToken(tokens, idx, options);
     };
 
-    this.md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-      Object.keys(this.anchorAttrs).map(attribute => {
-        let n = tokens[idx];
+    this.md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+      Object.keys(_this.anchorAttrs).map(function (attribute) {
+        var n = tokens[idx];
         if (!n.attrIndex) return;
-        let hidx = n.attrIndex('href');
+        var hidx = n.attrIndex('href');
         if (hidx < 0 || n.attrs[hidx][1][0] === '#') // Skip internal # links.
           return;
-        let aIndex = n.attrIndex(attribute);
-        let value = this.anchorAttrs[attribute];
+        var aIndex = n.attrIndex(attribute);
+        var value = _this.anchorAttrs[attribute];
 
         if (aIndex < 0) {
           n.attrPush([attribute, value]); // add new attribute
@@ -14890,7 +14914,7 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
     };
 
     if (this.toc) {
-      let ss;
+      var ss;
       this.md.use(dist_default.a, ss = Object.assign({}, {
         tocClassName: 'table-of-contents',
         tocFirstLevel: this.tocFirstLevel,
@@ -14901,19 +14925,19 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
         anchorLinkBefore: true,
         anchorClassName: 'toc-anchor',
         anchorLinkSymbolClassName: 'toc-anchor-link',
-        tocCallback: (tocMarkdown, tocArray, tocHtml) => {
+        tocCallback: function tocCallback(tocMarkdown, tocArray, tocHtml) {
           if (tocHtml) {
-            if (this.tocId && document.getElementById(this.tocId)) {
-              document.getElementById(this.tocId).innerHTML = tocHtml;
+            if (_this.tocId && document.getElementById(_this.tocId)) {
+              document.getElementById(_this.tocId).innerHTML = tocHtml;
             }
 
-            this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray);
+            _this.$emit('toc-rendered', tocHtml, tocMarkdown, tocArray);
           }
         }
       }, this.subOpts.toc));
     }
 
-    let outHtml = this.show && this.sourceData != '' ? this.md.render(this.prerender(this.sourceData, this)) : '';
+    var outHtml = this.show && this.sourceData != '' ? this.md.render(this.prerender(this.sourceData, this)) : '';
     if (outHtml != '') outHtml = this.postrender(outHtml);
     this.$emit('rendered', outHtml);
     return createElement('div', {
@@ -14922,27 +14946,38 @@ var markdown_it_inline_comments_default = /*#__PURE__*/__webpack_require__.n(mar
       }
     });
   },
+  beforeMount: function beforeMount() {
+    var _this2 = this;
 
-  beforeMount() {
-    if (this.$slots.default) {
+    if (this.$slots["default"]) {
       this.sourceData = '';
 
-      for (let slot of this.$slots.default) {
-        this.sourceData += slot.text;
+      var _iterator2 = _createForOfIteratorHelper(this.$slots["default"]),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var slot = _step2.value;
+          this.sourceData += slot.text;
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
       }
     }
 
-    this.$watch('source', () => {
-      this.sourceData = this.source;
-      this.$forceUpdate();
+    this.$watch('source', function () {
+      _this2.sourceData = _this2.source;
+
+      _this2.$forceUpdate();
     });
-    this.watches.forEach(v => {
-      this.$watch(v, () => {
-        this.$forceUpdate();
+    this.watches.forEach(function (v) {
+      _this2.$watch(v, function () {
+        _this2.$forceUpdate();
       });
     });
   }
-
 });
 // CONCATENATED MODULE: ./src/build.js
 

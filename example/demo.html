@@ -4,7 +4,7 @@
 <head>
   <title>Vue-Markdown-PDQ Demo</title>
   <script src="https://unpkg.com/vue@2.1.8/dist/vue.min.js"></script>
-  <script src="../dist/vue-markdown-pdq.js"></script>
+  <script src="../dist/vue-markdown-pdq.min.js"></script>
   <!-- <script src="https://dev.pdqi.com/lib/vue-markdown-pdq.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
@@ -58,10 +58,10 @@
     Vue.use(VueMarkdownPdq);
     new Vue({
       el: '#app',
-      mounted() {
+      mounted:function() {
           this.source =  document.getElementById('markdata').innerHTML;
       },
-      data() {
+      data:function() {
         return {
             disables:['html', 'breaks', 'linkify'], /*'footnote', */
             show:true, toc:false, source:'', more:false,
@@ -73,12 +73,12 @@
           }
       },
       methods: {
-        vget(name) {
+        vget:function(name) {
           return (this.disables.indexOf(name)<0);
         },
         
-        vmod(name) {
-            let idx = this.disables.indexOf(name);
+        vmod:function(name) {
+            var idx = this.disables.indexOf(name);
             if (idx<0)
                 this.disables.push(name);
             else
@@ -86,7 +86,7 @@
             this.source = this.source; // Refresh
         },
         
-        prerender(mdStr, that) {
+        prerender:function(mdStr, that) {
           //that.md.use(alerts);
           console.log("markdown pre");
           // that.md.use(window.markdownitCheckbox); // Example overriding builtin or load additional plugins.
@@ -94,13 +94,13 @@
           return mdStr;
         },
         
-        renderedEv(htmlStr) {
+        renderedEv:function(htmlStr) {
           console.log("markdown rendered");
           if (!this.toc)
             this.tocVal = '';
         },
         
-        tocRenderedEv(tocHtmlStr) {
+        tocRenderedEv:function(tocHtmlStr) {
           this.tocVal = tocHtmlStr;
         }
       },
